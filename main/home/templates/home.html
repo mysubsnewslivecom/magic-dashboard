@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ block.super }} - Home{% endblock title %}
+
+{% block css %}{% endblock css %}
+
+{% block headers %}Home{% endblock headers %}
+
+{% block headerbuttons %}{% endblock headerbuttons %}
+
+{% block content %}{% endblock content %}
+
+{% block js %}
+
+    <script src="{% static '/pages/home/home.js' %}" defer></script>
+
+{% endblock js %}
+

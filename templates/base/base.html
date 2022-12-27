@@ -1,0 +1,70 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'dist/img/favicon_io/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'dist/img/favicon_io/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'dist/img/favicon_io/favicon-16x16.png' %}">
+
+  <title>{% block title %}Rotary Phone{% endblock %}</title>
+
+  {% include 'base/css.html' %}
+
+  {% block css %}{% endblock css %}
+
+</head>
+
+<body>
+
+  {% include 'base/navbar.html' %}
+  <!-- {% include 'base/sidebar.html' %} -->
+  {% include 'base/logging.html' %}
+
+  <div class="container-fluid">
+    <div class="preloader" id="loader"></div>
+
+    <div class="row">
+      <!-- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"> -->
+      <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2 text-secondary">{% block headers %}{% endblock headers %}</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            {% block headerbuttons %}{% endblock headerbuttons %}
+          </div>
+        </div>
+        {% block content %}{% endblock content %}
+      </main>
+    </div>
+
+  </div>
+
+  {% include 'base/js.html' %}
+
+  {% block js %}{% endblock js %}
+
+  <script>
+
+    function showPage() {
+      setInterval(() => {
+
+      }, 10000);
+      document.getElementById("loader").style.display = "none";
+      // document.getElementById("myDiv").style.display = "block";
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+      showPage()
+      console.log('DOM fully loaded and parsed');
+    });
+
+  </script>
+
+</body>
+
+</html>
