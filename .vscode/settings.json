@@ -1,0 +1,4 @@
+{
+    "python.formatting.provider": "black",
+    "python.defaultInterpreterPath": "/home/linux/workspace/venv/venv@dashboard/bin/python3"
+}
