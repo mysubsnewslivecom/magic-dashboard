@@ -26,4 +26,3 @@ class UserLogout(LogoutView):
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "home.html"
-

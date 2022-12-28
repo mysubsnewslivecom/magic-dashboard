@@ -16,14 +16,14 @@ CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 class ISSLocation(ViewSet):
     def list(self, request, *args, **kwargs):
 
-        resp = requests.request(method="GET", url="http://api.open-notify.org/iss-now.json")
+        resp = requests.request(
+            method="GET", url="http://api.open-notify.org/iss-now.json"
+        )
         print(resp)
         return Response(resp.json())
 
 
-
 class FifaEPLStanding(ViewSet):
-
     @method_decorator(cache_page(CACHE_TTL))
     @method_decorator(vary_on_cookie)
     def list(self, request, *args, **kwargs):
@@ -32,7 +32,7 @@ class FifaEPLStanding(ViewSet):
         soup = WebScrapping(url=url, features=feature).get_soup_text()
 
         data = soup.find_all("a", class_="standings__row-grid")
-        
+
         table_arr = list()
         for row in data:
             temp_dict = dict()
@@ -54,6 +54,3 @@ class FifaEPLStanding(ViewSet):
             table_arr.append(temp_dict)
 
         return Response(table_arr)
-
-
-

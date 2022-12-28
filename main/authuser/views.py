@@ -36,6 +36,7 @@ def signup(request):
         },
     )
 
+
 class SignupFormView(FormView):
     form_class = SignUpForm
     success_url = "/"

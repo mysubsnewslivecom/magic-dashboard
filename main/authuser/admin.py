@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 
 from .models import User
 
+
 class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {"fields": ("name", "email", "password1", "password2")}),

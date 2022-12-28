@@ -9,7 +9,7 @@ import django_redis
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = path.dirname(path.abspath(__file__))
-dotenv_path = path.join(BASE_DIR, '.env')
+dotenv_path = path.join(BASE_DIR, ".env")
 load_dotenv(dotenv_path)
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
@@ -50,42 +50,41 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'rotary_phone.urls'
+ROOT_URLCONF = "rotary_phone.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [
             path.join(BASE_DIR, "templates"),
             path.join(
                 BASE_DIR,
                 "templates",
                 "base",
             ),
-
         ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'rotary_phone.wsgi.application'
+WSGI_APPLICATION = "rotary_phone.wsgi.application"
 
 
 # Database
@@ -94,18 +93,18 @@ WSGI_APPLICATION = 'rotary_phone.wsgi.application'
 DATABASE_URL = getenv("DATABASE_URL")
 
 DATABASES = dict()
-DATABASES["default"] = dj_database_url.config(
-    conn_max_age=600, ssl_require=False
-)
-DATABASES['custom'] = dj_database_url.config(
-    conn_max_age=600, ssl_require=False
-)
+DATABASES["default"] = dj_database_url.config(conn_max_age=600, ssl_require=False)
+DATABASES["custom"] = dj_database_url.config(conn_max_age=600, ssl_require=False)
 
-DATABASES['default']['PASSWORD'] = getenv("DJANGO_DB_PASSWORD")
-DATABASES['default']['OPTIONS'] = {'options': f'-c search_path={getenv("DJANGO_SCHEMA_NAME")}'}
+DATABASES["default"]["PASSWORD"] = getenv("DJANGO_DB_PASSWORD")
+DATABASES["default"]["OPTIONS"] = {
+    "options": f'-c search_path={getenv("DJANGO_SCHEMA_NAME")}'
+}
 
-DATABASES['custom']['OPTIONS'] = {'options': f'-c search_path={getenv("DJANGO_CUSTOM_SCHEMA")}'}
-DATABASES['custom']['PASSWORD'] = getenv("DJANGO_DB_PASSWORD")
+DATABASES["custom"]["OPTIONS"] = {
+    "options": f'-c search_path={getenv("DJANGO_CUSTOM_SCHEMA")}'
+}
+DATABASES["custom"]["PASSWORD"] = getenv("DJANGO_DB_PASSWORD")
 
 
 CACHE_TTL = 60 * int(getenv("CACHE_TTL_SECS", 1500))
@@ -130,16 +129,16 @@ logger.info(REDIS_LOCATION)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -147,15 +146,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     path.join(BASE_DIR, "static"),
@@ -181,7 +180,7 @@ DJANGO_PORT = getenv("DJANGO_PORT", 8000)
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Auth model
 AUTH_USER_ALLOW_SIGNUP = True
