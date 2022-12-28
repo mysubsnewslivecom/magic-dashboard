@@ -1,10 +1,10 @@
-from pathlib import Path
 from os import getenv, path
+from pathlib import Path
+
+import dj_database_url
+from dotenv import load_dotenv
 from loguru import logger
 
-from dotenv import load_dotenv
-import dj_database_url
-import django_redis
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -96,7 +96,6 @@ DATABASES = dict()
 DATABASES["default"] = dj_database_url.config(conn_max_age=600, ssl_require=False)
 DATABASES["custom"] = dj_database_url.config(conn_max_age=600, ssl_require=False)
 
-DATABASES["default"]["PASSWORD"] = getenv("DJANGO_DB_PASSWORD")
 DATABASES["default"]["OPTIONS"] = {
     "options": f'-c search_path={getenv("DJANGO_SCHEMA_NAME")}'
 }
@@ -104,6 +103,7 @@ DATABASES["default"]["OPTIONS"] = {
 DATABASES["custom"]["OPTIONS"] = {
     "options": f'-c search_path={getenv("DJANGO_CUSTOM_SCHEMA")}'
 }
+DATABASES["default"]["PASSWORD"] = getenv("DJANGO_DB_PASSWORD")
 DATABASES["custom"]["PASSWORD"] = getenv("DJANGO_DB_PASSWORD")
 
 
@@ -233,6 +233,5 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     # OTHER SETTINGS
 }
-
 
 TASK_DEFAULT_QUEUE = getenv("TASK_DEFAULT_QUEUE", "na")

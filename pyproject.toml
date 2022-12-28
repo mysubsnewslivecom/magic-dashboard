@@ -30,6 +30,7 @@ isort = "^5.11.4"
 yapf = "^0.32.0"
 flake8 = "^6.0.0"
 autopep8 = "^2.0.1"
+autoflake = "^2.0.0"
 
 
 [build-system]

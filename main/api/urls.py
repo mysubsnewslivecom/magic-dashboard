@@ -1,10 +1,10 @@
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-from main.api.views import ISSLocation, FifaEPLStanding
 
 # from django.conf.urls import url
 from rest_framework import routers
 
+from main.api.views import FifaEPLStanding, ISSLocation
 
 app_name = "api"
 

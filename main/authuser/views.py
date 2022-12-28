@@ -1,11 +1,8 @@
 from django.conf import settings
-from django.http import HttpResponseForbidden
-from django.shortcuts import render, redirect
-from django.contrib.auth import logout as logout_user
 from django.contrib.auth import login as login_user
+from django.http import HttpResponseForbidden
+from django.shortcuts import redirect, render
 from django.views.generic import FormView
-from django.urls import reverse_lazy
-
 
 from .forms import SignUpForm
 from .models import User

@@ -62,6 +62,22 @@ tests = ["attrs[tests-no-zope]", "zope.interface"]
 tests-no-zope = ["cloudpickle", "cloudpickle", "hypothesis", "hypothesis", "mypy (>=0.971,<0.990)", "mypy (>=0.971,<0.990)", "pympler", "pympler", "pytest (>=4.3.0)", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-mypy-plugins", "pytest-xdist[psutil]", "pytest-xdist[psutil]"]
 
 [[package]]
+name = "autoflake"
+version = "2.0.0"
+description = "Removes unused imports and unused variables"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "autoflake-2.0.0-py3-none-any.whl", hash = "sha256:d58ed4187c6b4f623a942b9a90c43ff84bf6a266f3682f407b42ca52073c9678"},
+    {file = "autoflake-2.0.0.tar.gz", hash = "sha256:7185b596e70d8970c6d4106c112ef41921e472bd26abf3613db99eca88cc8c2a"},
+]
+
+[package.dependencies]
+pyflakes = ">=3.0.0"
+tomli = {version = ">=2.0.1", markers = "python_version < \"3.11\""}
+
+[[package]]
 name = "autopep8"
 version = "2.0.1"
 description = "A tool that automatically formats Python code to conform to the PEP 8 style guide"
@@ -1187,4 +1203,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4eac21520a6a3968ee89f653bbc42a34eddddc7a00ccee08343121bca9b2e8ac"
+content-hash = "f0ea2c81f62e3547ddcad8598b952875462df27477ea0028a0f82178b35ec3e4"
