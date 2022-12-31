@@ -17,15 +17,17 @@ exclude =
   .git,
   __pycache__,
   *venv,
-  build
-  tests/fixtures/*
-  */*/migrations/*
+  build,
+  tests/fixtures/*,
+  */*/migrations/*,
+  **/*/*/__init__.py,
 
 # Specify a list of codes to ignore.
 ignore =
     E133,
     E203,
     W503
+
 # Specify the list of error codes you wish Flake8 to report.
 select =
     E,

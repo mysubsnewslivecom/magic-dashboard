@@ -1,6 +1,9 @@
 let dashboard = {
     ISSNow: async () => {
-        let response = await getResponse("/api/iss/", "GET")
+        let url = '/api/iss/'
+        let method = 'GET'
+        let response = await getResponse(url, method)
+
     }
 }
 
@@ -35,12 +38,6 @@ let home = {
             bDivider.parentNode.appendChild(idGitProjectsDiv);
         }
 
-        // if (bDivider.nextSibling) {
-        //     bDivider.parentNode.insertBefore(idGitProjectsDiv, bDivider.nextSibling);
-        // } else {
-        //     bDivider.parentNode.appendChild(idGitProjectsDiv);
-        // }
-
         payload = {
             "elementId": idGitProjectsDiv.id,
             "url": "/api/git/projects/",
@@ -51,6 +48,7 @@ let home = {
             "refreshCard": "refreshGitProjects"
         }
         await buildTable(payload)
+
     }
 }
 
@@ -65,6 +63,3 @@ window.addEventListener('DOMContentLoaded', async (event) => {
     console.log('DOM fully loaded and parsed');
 
 });
-
-
-
