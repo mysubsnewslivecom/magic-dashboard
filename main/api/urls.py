@@ -5,6 +5,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework import routers
 
 from main.api.views import FifaEPLStanding, ISSLocation
+from main.api.views_gitsvn import GitsvnProjectViewset
 
 app_name = "api"
 
@@ -13,6 +14,7 @@ router = routers.DefaultRouter()
 
 router.register(r"iss", ISSLocation, basename="home-iss")
 router.register(r"epl-standing", FifaEPLStanding, basename="home-epl-standing")
+router.register(r"git/projects", GitsvnProjectViewset, basename="gitsvn-git-projects")
 
 
 urlpatterns = [

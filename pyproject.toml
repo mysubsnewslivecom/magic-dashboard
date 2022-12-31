@@ -31,6 +31,8 @@ yapf = "^0.32.0"
 flake8 = "^6.0.0"
 autopep8 = "^2.0.1"
 autoflake = "^2.0.0"
+django-tables2 = "^2.5.0"
+python-gitlab = "^3.12.0"
 
 
 [build-system]

@@ -4,7 +4,7 @@ from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
 from loguru import logger
-
+from rotary_phone.app_config import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,11 +40,14 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     "drf_spectacular_sidecar",
     "rest_framework",
+    "django_tables2",
 ]
 
 LOCAL_APPS = [
     "main.home.apps.HomeConfig",
     "main.authuser.apps.AuthuserConfig",
+    "main.misc.apps.MiscConfig",
+    "main.gitsvn.apps.GitsvnConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -235,3 +238,7 @@ SPECTACULAR_SETTINGS = {
 }
 
 TASK_DEFAULT_QUEUE = getenv("TASK_DEFAULT_QUEUE", "na")
+
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap-responsive.html"
+
+GITLAB_TOKEN = getenv("GITLAB_TOKEN")

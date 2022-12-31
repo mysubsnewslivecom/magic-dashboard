@@ -46,6 +46,11 @@
 
   {% include 'base/js.html' %}
 
+<script>
+  document.getElementById("loader").style.display = "block";
+
+</script>
+
   {% block js %}{% endblock js %}
 
   <script>
@@ -60,7 +65,7 @@
 
     window.addEventListener('DOMContentLoaded', (event) => {
       showPage()
-      console.log('DOM fully loaded and parsed');
+      console.log('DOM fully loaded and parsed. base.html');
     });
 
   </script>

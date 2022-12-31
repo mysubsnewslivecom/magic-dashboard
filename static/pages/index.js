@@ -1,5 +1,5 @@
 function dataTablesJS(name) {
-    console.log("loading datatables!!!")
+    console.log(`loading datatables ${name}!!!`)
     $(document).ready(function () {
         $(name).DataTable(
             {
@@ -130,7 +130,7 @@ let log = {
 
         let toastHSmall = document.createElement("small")
         toastHSmall.classList.add(textColor)
-        toastHSmall.innerText = datetime
+        toastHSmall.innerText = `${new Date().toLocaleString()}`
 
         let toastHClose = document.createElement("button")
         toastHClose.type = "button"
@@ -154,10 +154,8 @@ let log = {
 
         if (toast) {
             const toaster = new bootstrap.Toast(toast)
-
             toaster.show()
         }
-
     }
 }
 
@@ -173,7 +171,6 @@ async function createTable(...args) {
 
     let tableTHead = document.createElement("thead")
     let tableTHeadTR = document.createElement("tr")
-
     let tableBody = document.createElement("tbody")
 
     let headers = Object.keys(data[0])
@@ -181,7 +178,7 @@ async function createTable(...args) {
     headers.forEach(el => {
         if (!exclusionList.includes(el)) {
             let th = document.createElement("th")
-            th.innerText = el.toUpperCase().replace("_", " ")
+            th.innerText = el.toUpperCase().replaceAll("_", " ")
             tableTHeadTR.appendChild(th)
         }
     });
@@ -200,27 +197,102 @@ async function createTable(...args) {
             }
             tableBody.appendChild(rowElement);
         }
-
     }
     tableTHead.appendChild(tableTHeadTR)
 
     table.appendChild(tableTHead)
     table.appendChild(tableBody)
     return table
-
 }
 
 
-async function buildTable(elementId, url, method, exclusionList, tableId) {
+async function buildTable(payload) {
+    const { elementId, url, method, exclusionList, tableId, cardTitle, refreshCard } = payload
     let idElement = document.getElementById(elementId)
     if (idElement) {
         let response = await getResponse(url, method)
         let table = await createTable(response, exclusionList, tableId)
         idElement.innerHTML = ""
-        idElement.appendChild(table)
+        let card = await createCard(table, cardTitle, refreshCard)
+        idElement.appendChild(card)
         dataTablesJS(`#${tableId}`)
     }
     else {
-        console.log(`${elementId} not found`);
+        console.log(`div ${elementId} not found!`);
     }
+}
+
+
+async function createCard(element, ...args) {
+
+    var title = args[0]
+    var refreshTarget = args[1]
+
+    let parentCardDiv = document.createElement("div")
+    parentCardDiv.classList.add("col-lg-12", "col-12")
+
+    let card = document.createElement("div")
+    card.classList.add("card")
+
+    let cardHeader = document.createElement("div")
+    cardHeader.classList.add("card-header")
+
+    let row = document.createElement("div")
+    row.classList.add("row")
+
+    let rowChild = document.createElement("div")
+    rowChild.classList.add("col-md-12", "bg-light", "text-right")
+
+    let collapseButton = document.createElement("button")
+    collapseButton.type = "button"
+    collapseButton.classList.add("btn", "btn-link", "float-end")
+    collapseButton.setAttribute("data-bs-toggle", "collapse")
+    collapseButton.setAttribute("data-bs-target", `#${refreshTarget}`)
+    collapseButton.setAttribute("aria-expanded", "false")
+    collapseButton.setAttribute("aria-controls", refreshTarget)
+    collapseButton.style = "text-decoration: none; border: 1px dashed #61affe;"
+    collapseButton.innerHTML = '<i class="bi bi-arrows-collapse"></i>'
+
+    let refreshButton = document.createElement("button")
+    refreshButton.type = "button"
+    refreshButton.classList.add("btn", "btn-link", "float-end")
+    refreshButton.setAttribute("data-bs-target", `#${refreshTarget}`)
+    refreshButton.setAttribute("aria-expanded", "false")
+    refreshButton.setAttribute("aria-controls", refreshTarget)
+    refreshButton.style = "text-decoration: none; border: 1px dashed #61affe;"
+    refreshButton.innerHTML= '<i class="bi bi-arrow-clockwise"></i>'
+
+    let rowChildH3 = document.createElement("h3")
+    rowChildH3.classList.add("float-start")
+    rowChildH3.innerText = title
+
+    rowChild.appendChild(rowChildH3)
+    rowChild.appendChild(collapseButton)
+    rowChild.appendChild(refreshButton)
+
+    row.appendChild(rowChild)
+
+    cardHeader.appendChild(row)
+
+    let parentCardBodyDiv = document.createElement("div")
+    parentCardBodyDiv.classList.add("collapse", "collapse-horizontal", "show")
+    parentCardBodyDiv.id = refreshTarget
+
+    let cardBody = document.createElement("div")
+    cardBody.classList.add("card-body")
+
+    let childCardBody = document.createElement("div")
+    childCardBody.id = `id${refreshTarget}`
+    childCardBody.appendChild(element)
+
+    cardBody.appendChild(childCardBody)
+
+    card.appendChild(cardHeader)
+    parentCardBodyDiv.appendChild(cardBody)
+    card.appendChild(parentCardBodyDiv)
+
+    parentCardDiv.appendChild(card)
+
+    return parentCardDiv
+
 }

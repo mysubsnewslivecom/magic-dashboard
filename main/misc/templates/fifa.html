@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_tables2 %}
+
+{% block title %}{{ block.super }} - FIFA{% endblock title %}
+
+{% block css %}{% endblock css %}
+
+{% block headers %}FIFA{% endblock headers %}
+
+{% block headerbuttons %}{% endblock headerbuttons %}
+
+{% block content %}
+
+<div id="idFifaStanding" class="no-display">
+  {% render_table table %}
+
+</div>
+
+{% endblock content %}
+
+{% block js %}
+
+    <script src="{% static '/pages/misc/fifa.js' %}" defer></script>
+
+  <script>
+    document.getElementById("idFifaStanding").classList.remove("no-display")
+    dataTablesJS("#idFifaStandingTable")
+  </script>
+
+{% endblock js %}
+
