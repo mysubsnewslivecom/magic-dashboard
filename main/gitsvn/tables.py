@@ -1,4 +1,5 @@
 import django_tables2 as tables
+
 from main.misc.tables import TitleColumn
 
 

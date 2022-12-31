@@ -1,5 +1,6 @@
-from main.gitsvn.functions import GitlabService, GitConnect
 from django.views.generic import TemplateView
+
+from main.gitsvn.functions import GitConnect, GitlabService
 from main.gitsvn.tables import GitProjectTable
 
 
@@ -15,8 +16,3 @@ class ProjectList(TemplateView):
         context["table"] = GitProjectTable(data=projects)
 
         return context
-
-
-
-
-

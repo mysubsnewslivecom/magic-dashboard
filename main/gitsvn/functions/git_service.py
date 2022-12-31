@@ -1,5 +1,4 @@
-from main.gitsvn.functions import GitLabProjectIDs, GitConnect
-from loguru import logger
+from main.gitsvn.functions import GitConnect, GitLabProjectIDs
 
 
 class GitlabService:
