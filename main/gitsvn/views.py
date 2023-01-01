@@ -30,3 +30,11 @@ class IssueList(TemplateView):
 
         context["table"] = GitIssuesTable(data=issues)
         return context
+
+
+class IssueCreate(TemplateView):
+    template_name = "issues/issue_create.html"
+
+
+class IssueEdit(TemplateView):
+    template_name = "issues/issue_form.html"

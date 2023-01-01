@@ -1,6 +1,4 @@
 import django_tables2 as tables
-import itertools
-
 
 from main.misc.tables import TitleColumn
 
