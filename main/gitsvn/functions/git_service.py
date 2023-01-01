@@ -39,3 +39,35 @@ class GitlabService:
             projects.append(temp)
 
         return projects
+
+
+class GitlabIssues:
+    def __init__(self, gitlab_service: GitlabService):
+        self.gitlab_service = gitlab_service
+
+    def get_all_issues(self):
+        project_ids = [x.value for x in GitLabProjectIDs]
+        issue_arr = list()
+        for project_id in project_ids:
+            project = self.gitlab_service.get_project(project_id)
+            issues = project.issues.list(order_by="created_at", sort="desc")
+            for issue in issues:
+                temp = {}
+                temp["iid"] = issue.attributes.get("iid")
+                temp["title"] = issue.attributes.get("title")
+                temp["description"] = issue.attributes.get("description")
+                temp["state"] = issue.attributes.get("state")
+                temp["web_url"] = issue.attributes.get("web_url")
+                temp["issue_type"] = issue.attributes.get("issue_type")
+                # temp["project_id"] = issue.attributes.get("project_id")
+                # temp["_links"] = issue.attributes.get("_links")["self"]
+                temp["name"] = project.attributes.get("name")
+                issue_arr.append(temp)
+
+        return issue_arr
+
+    def issue_create(self, project_id, payload: dict):
+        project = self.gitlab_service.get_project(project_id)
+        issue = project.issues.create(payload)
+
+        print(issue)

@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 
-from main.gitsvn.functions import GitConnect, GitlabService
-from main.gitsvn.tables import GitProjectTable
+from main.gitsvn.functions import GitConnect, GitlabIssues, GitlabService
+from main.gitsvn.tables import GitIssuesTable, GitProjectTable
 
 
 class ProjectList(TemplateView):
@@ -15,4 +15,18 @@ class ProjectList(TemplateView):
         context["projects"] = projects
         context["table"] = GitProjectTable(data=projects)
 
+        return context
+
+
+class IssueList(TemplateView):
+    template_name = "issues/issue_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        gl = GitConnect()
+        gs = GitlabService(gl)
+        gi = GitlabIssues(gs)
+        issues = gi.get_all_issues()
+
+        context["table"] = GitIssuesTable(data=issues)
         return context

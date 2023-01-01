@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_tables2 %}
+
+{% block title %}{{ block.super }} - Issues - Create{% endblock title %}
+
+{% block css %}{% endblock css %}
+
+{% block headers %}Create Issues{% endblock headers %}
+
+{% block headerbuttons %}{% endblock headerbuttons %}
+
+{% block content %}
+
+<div id="idIssueList" class="no-display">
+
+
+</div>
+
+{% endblock content %}
+
+{% block js %}
+
+<script src="{% static '/pages/gitsvn/gitsvn.js' %}" defer></script>
+
+<script>
+  document.getElementById("idIssueList").classList.remove("no-display")
+  dataTablesJS("#idGitIssueList")
+
+</script>
+
+{% endblock js %}

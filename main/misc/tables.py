@@ -6,6 +6,7 @@ class TitleColumn(tables.Column):
         return str(value).title()
 
 
+
 class FifaStandingTable(tables.Table):
     position = TitleColumn(orderable=False)
     team = TitleColumn(orderable=False)
@@ -43,3 +44,4 @@ class FifaStandingTable(tables.Table):
     #     "goal_diff",
     #     "points",
     # )  # sequence of the columns
+

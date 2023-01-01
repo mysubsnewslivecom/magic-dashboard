@@ -11,8 +11,16 @@
 
 {% block content %}
 
+<div class="row">
+  {% include 'dashboard/section/iss.html' %}
+  {% include 'dashboard/section/ip.html' %}
+</div>
+
+<div class="b-divider"></div>
+
 <div id="idFifaStanding"></div>
 
+<div class="b-divider"></div>
 {% endblock content %}
 
 {% block js %}

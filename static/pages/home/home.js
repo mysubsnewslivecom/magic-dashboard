@@ -4,6 +4,25 @@ let dashboard = {
         let method = 'GET'
         let response = await getResponse(url, method)
 
+        let idISSLocation = document.getElementById("idISSLocation")
+        if (idISSLocation) {
+            const { iss_position } = response
+            const { longitude, latitude } = iss_position
+            idISSLocation.innerText = `${longitude}, ${latitude}`
+        }
+    },
+    getIP: async () => {
+        let url = '/api/ip/'
+        let method = 'GET'
+        let response = await getResponse(url, method)
+        let idIP = document.getElementById("idIP")
+        if (idIP) {
+            const { ip } = response
+            idIP.innerText = ip
+        }
+
+        console.log(response);
+
     }
 }
 
@@ -15,6 +34,7 @@ let home = {
         var idFifa = document.getElementById("idFifaStanding")
 
         await dashboard.ISSNow()
+        await dashboard.getIP()
 
         let payload = {
             "elementId": idFifa.id,

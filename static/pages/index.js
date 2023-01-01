@@ -275,7 +275,7 @@ async function createCard(element, ...args) {
     cardHeader.appendChild(row)
 
     let parentCardBodyDiv = document.createElement("div")
-    parentCardBodyDiv.classList.add("collapse", "collapse-horizontal", "show")
+    parentCardBodyDiv.classList.add("collapse", "show")
     parentCardBodyDiv.id = refreshTarget
 
     let cardBody = document.createElement("div")

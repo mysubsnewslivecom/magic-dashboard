@@ -27,3 +27,10 @@ class FifaEPLStanding(ViewSet):
         data = FifaEPLStandingScrapper().get_data()
 
         return Response(data)
+
+
+class IPViewset(ViewSet):
+    def list(self, request, *args, **kwargs):
+
+        resp = requests.request(method="GET", url=settings.IPIFY_BASEURL)
+        return Response(resp.json())
