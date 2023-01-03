@@ -27,10 +27,12 @@
             Git
           </a>
           <ul class="dropdown-menu">
+            <li><h4 class="mx-2">Projects</h4></li>
             <li><a class="dropdown-item" href="{% url 'git:git-projects' %}">List projects</a></li>
+            <li><hr class="dropdown-divider"><h4 class="mx-2">Issue</h4></li>
             <li><a class="dropdown-item" href="{% url 'git:git-issue-list' %}">List issues</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="{% url 'git:git-issue-create' %}">Create issues</a></li>
+            <li><a class="dropdown-item" href="{% url 'git:git-issue-edit' %}">Retrieve issues</a></li>
           </ul>
         </li>
 
@@ -48,10 +50,23 @@
 
 
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <li class="d-flex nav-item dropdown text-decoration-none">
+        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown" aria-expanded="false"
+          >{{request.user.get_full_name}}</a>
+        <ul class="dropdown-menu dropdown-menu-end mx-0 shadow w-220px">
+          <li><a class="dropdown-item d-flex gap-2 align-items-center" href="{% url 'admin:index' %}"><i
+                class="fa-solid fa-user-doctor"></i> Admin</a></li>
+          <li><a class="dropdown-item d-flex gap-2 align-items-center" target="_blank" href="{% url 'api:swagger-ui' %}"><i
+                class="fa-solid fa-tape"></i> Api</a></li>
+          <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#"><i
+                class="bi bi-person"></i> Profile</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item d-flex gap-2 align-items-center" href="{% url 'logout' %}"><i
+                class="bi bi-box-arrow-right"></i> Logout</a></li>
+        </ul>
+      </li>
     </div>
 
 </nav>

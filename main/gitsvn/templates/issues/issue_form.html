@@ -14,7 +14,48 @@
 
 <div id="idIssueCreate" class="no-display">
 
+  <form class="row g-3 needs-validation" action="{% url 'git:git-issue-edit' %}" method="post">
+    {% csrf_token %}
 
+    {% for field in form %}
+
+    <div class="col-auto">
+      <label for="{{ field.id_for_label }}" class="visually-hidden">{{ field.label }}</label>
+      {% comment %} <input type="number" class="form-control" id="{{ field.id_for_label }}"
+        placeholder="{{ field.label }}"> {% endcomment %}
+      {{ field }}
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-3">Search</button>
+    </div>
+
+    {% if field.errors %}
+    <div class="invalid-feedback">
+      <span style="color: red">{{ field.errors }}</span>
+    </div>
+    {% endif %}
+
+    {% endfor %}
+  </form>
+  <hr class="my-4">
+
+  {% if issue_dict %}
+  <div class="my-3" style="font-family: Roboto">
+  <h3 class="mb-3">Issue Details</h3>
+
+  {% for k,v in issue_dict.items %}
+
+    <div class="mb-3 row border-bottom">
+      <label for="{{ k }}" class="col-sm-2 col-form-label">{{ k|upper|safe }}</label>
+      <div class="col-sm-7">
+        <input type="text" readonly class="form-control-plaintext" id="id{{ k }}" value="{{ v }}">
+      </div>
+    </div>
+    {% endfor %}
+
+  {% endif %}
+
+</div>
 </div>
 
 {% endblock content %}

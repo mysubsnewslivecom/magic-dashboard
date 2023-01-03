@@ -6,7 +6,7 @@ from django.views.decorators.vary import vary_on_cookie
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from main.gitsvn.functions import GitConnect, GitlabService
+from main.utility.functions import ResourceLocator
 
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 
@@ -15,7 +15,6 @@ class GitsvnProjectViewset(ViewSet):
     @method_decorator(cache_page(CACHE_TTL))
     @method_decorator(vary_on_cookie)
     def list(self, request, *args, **kwargs):
-        gl = GitConnect()
-        gs = GitlabService(gl)
+        gs = ResourceLocator().get_gitlab_service()
         projects = gs.get_gitlab_project_details()
         return Response(data=projects)
