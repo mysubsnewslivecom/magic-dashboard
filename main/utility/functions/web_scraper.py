@@ -37,19 +37,19 @@ class FifaEPLStandingScrapper:
         for row in data:
             temp_dict = dict()
             temp = row.text.split()
-            temp_dict["position"] = temp[0]
+            temp_dict["position"] = int(temp[0])
 
             if len(temp) == 8:
                 temp_dict["team"] = temp[1]
             elif len(temp) == 9:
                 temp_dict["team"] = " ".join([temp[1], temp[2]])
 
-            temp_dict["played"] = temp[-6]
-            temp_dict["wins"] = temp[-5]
-            temp_dict["draw"] = temp[-4]
-            temp_dict["loss"] = temp[-3]
-            temp_dict["goal_diff"] = temp[-2]
-            temp_dict["points"] = temp[-1]
+            temp_dict["played"] = int(temp[-6])
+            temp_dict["wins"] = int(temp[-5])
+            temp_dict["draw"] = int(temp[-4])
+            temp_dict["loss"] = int(temp[-3])
+            temp_dict["goal_diff"] = int(temp[-2])
+            temp_dict["points"] = int(temp[-1])
 
             table_arr.append(temp_dict)
         return table_arr

@@ -83,9 +83,9 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
-            'libraries': {
-                'loglevel': 'rotary_phone.templatetags.template_utility',
-            }
+            "libraries": {
+                "loglevel": "rotary_phone.templatetags.template_utility",
+            },
         },
     },
 ]

@@ -7,12 +7,15 @@ from django.views.decorators.vary import vary_on_cookie
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
+from main.api import serializer
 from main.utility.functions import FifaEPLStandingScrapper
 
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 
 
 class ISSLocation(ViewSet):
+    serializer_class = serializer.JsonSerializer
+
     def list(self, request, *args, **kwargs):
 
         resp = requests.request(method="GET", url=settings.ISS_LOCATION)
@@ -20,6 +23,8 @@ class ISSLocation(ViewSet):
 
 
 class FifaEPLStanding(ViewSet):
+    serializer_class = serializer.FifaEPLStandingSerializer
+
     @method_decorator(cache_page(CACHE_TTL))
     @method_decorator(vary_on_cookie)
     def list(self, request, *args, **kwargs):
@@ -30,6 +35,8 @@ class FifaEPLStanding(ViewSet):
 
 
 class IPViewset(ViewSet):
+    serializer_class = serializer.IPSerializer
+
     def list(self, request, *args, **kwargs):
 
         resp = requests.request(method="GET", url=settings.IPIFY_BASEURL)

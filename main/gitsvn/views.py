@@ -1,12 +1,13 @@
-from django.views.generic import TemplateView, edit
-from django.http import HttpResponseRedirect
-from django.urls import reverse , reverse_lazy
 from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic import TemplateView, edit
 
+from main.gitsvn.forms import IssueCreateForm, IssueGetIIDForm
 from main.gitsvn.functions import GitConnect, GitlabService
 from main.gitsvn.tables import GitIssuesTable, GitProjectTable
-from main.gitsvn.forms import IssueCreateForm, IssueGetIIDForm
 from main.utility.functions import ResourceLocator
+
 
 class ProjectList(TemplateView):
     template_name = "gitsvn.html"
@@ -41,7 +42,6 @@ class IssueCreate(TemplateView, edit.FormView):
     success_message = "Issue %(issue_id)s created successfully"
     success_url = reverse_lazy("git:git-issue-create")
 
-
     def form_valid(self, form):
         form.cleaned_data["assignee_ids"] = [7682182]
 
@@ -51,7 +51,12 @@ class IssueCreate(TemplateView, edit.FormView):
 
         issue = gi.issue_create(project_id=28508628, payload=payload)
 
-        messages.success(self.request, self.get_success_message(cleaned_data=form.cleaned_data, id=issue.asdict()["iid"]))
+        messages.success(
+            self.request,
+            self.get_success_message(
+                cleaned_data=form.cleaned_data, id=issue.asdict()["iid"]
+            ),
+        )
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_message(self, cleaned_data, id):
@@ -59,6 +64,7 @@ class IssueCreate(TemplateView, edit.FormView):
             cleaned_data,
             issue_id=id,
         )
+
 
 class IssueFormView(edit.FormView):
     template_name = "issues/issue_form.html"
@@ -68,7 +74,9 @@ class IssueFormView(edit.FormView):
 
     def form_valid(self, form):
         iid = form.cleaned_data["iid"]
-        return HttpResponseRedirect(reverse('git:git-issue-id-edit', kwargs={'iid':iid}))
+        return HttpResponseRedirect(
+            reverse("git:git-issue-id-edit", kwargs={"iid": iid})
+        )
         # return HttpResponseRedirect(self.get_success_url())
 
 
@@ -103,7 +111,9 @@ class IssueIdFormView(edit.FormView):
         issue_dict["description"] = issue["description"]
         issue_dict["state"] = issue["state"]
         issue_dict["labels"] = issue["labels"]
-        issue_dict["assignees"] = issue["assignees"][0]["username"] if issue["assignees"] else "-"
+        issue_dict["assignees"] = (
+            issue["assignees"][0]["username"] if issue["assignees"] else "-"
+        )
         issue_dict["issue_type"] = issue["issue_type"]
         issue_dict["web_url"] = issue["web_url"]
         context["issue_dict"] = issue_dict

@@ -1,5 +1,7 @@
-from main.gitsvn.functions import GitConnect, GitLabProjectIDs
 from gitlab import exceptions
+
+from main.gitsvn.functions import GitConnect, GitLabProjectIDs
+
 
 class GitlabService:
     def __init__(self, gitlab_connect: GitConnect):
@@ -73,8 +75,7 @@ class GitlabIssues:
         print(issue)
         return issue
 
-
-    def get_issue(self, iid, project_id = 28508628):
+    def get_issue(self, iid, project_id=28508628):
         project = self.gitlab_service.get_project(project_id)
 
         try:
@@ -83,5 +84,3 @@ class GitlabIssues:
             issue = ex.error_message
 
         return issue
-
-

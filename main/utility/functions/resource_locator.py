@@ -3,25 +3,28 @@ from main.utility.functions import WebScrapping
 
 
 class ResourceLocator:
-
-    def get_gitlab_connect(self):
+    @staticmethod
+    def get_gitlab_connect():
         gl = GitConnect(service="gitlab")
 
         return gl
 
-    def get_gitlab_service(self):
-        gl = self.get_gitlab_connect()
+    @staticmethod
+    def get_gitlab_service():
+        gl = ResourceLocator().get_gitlab_connect()
         gs = GitlabService(gl)
 
         return gs
 
-    def get_gitlab_issue(self):
-        gs = self.get_gitlab_service()
+    @staticmethod
+    def get_gitlab_issue():
+        gs = ResourceLocator().get_gitlab_service()
         gi = GitlabIssues(gs)
 
         return gi
 
-    def get_webscraper(self, url, features):
+    @staticmethod
+    def get_webscraper(url, features):
         ws = WebScrapping(url=url, features=features)
 
         return ws
