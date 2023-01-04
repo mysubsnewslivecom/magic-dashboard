@@ -55,3 +55,15 @@ class GitlabIssuesViewset(ViewSet):
         issue_dict["web_url"] = issue["web_url"]
 
         return Response(data=issue_dict)
+
+
+class GitIssues(ViewSet):
+    serializer_class = serializer.JsonSerializer
+    @method_decorator(cache_page(CACHE_TTL))
+    @method_decorator(vary_on_cookie)
+    def list(self, request, *args, **kwargs):
+        gs = ResourceLocator().get_gitlab_issue()
+        projects = gs.get_all_issues()
+        return Response(data=projects)
+
+

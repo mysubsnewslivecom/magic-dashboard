@@ -4,19 +4,21 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 # from django.conf.urls import url
 from rest_framework import routers
 
-from main.api.views import FifaEPLStanding, IPViewset, ISSLocation
-from main.api.views_gitsvn import GitlabIssuesViewset, GitsvnProjectViewset
+from main.api import views
+from main.api import views_gitsvn
+
 
 app_name = "api"
 
 # newly registered ViewSet
 router = routers.DefaultRouter()
 
-router.register(r"iss", ISSLocation, basename="home-iss")
-router.register(r"ip", IPViewset, basename="home-ip")
-router.register(r"epl-standing", FifaEPLStanding, basename="home-epl-standing")
-router.register(r"git/projects", GitsvnProjectViewset, basename="gitsvn-git-projects")
-router.register(r"git/issues", GitlabIssuesViewset, basename="gitsvn-gitlab-issues")
+router.register(r"iss", views.ISSLocation, basename="home-iss")
+router.register(r"ip", views.IPViewset, basename="home-ip")
+router.register(r"epl-standing", views.FifaEPLStanding, basename="home-epl-standing")
+router.register(r"git/projects", views_gitsvn.GitsvnProjectViewset, basename="gitsvn-git-projects")
+router.register(r"git/issues/gitab", views_gitsvn.GitlabIssuesViewset, basename="gitsvn-git-issues-gitlab")
+router.register(r"git/issues", views_gitsvn.GitIssues, basename="gitsvn-git-issues")
 
 
 urlpatterns = [
