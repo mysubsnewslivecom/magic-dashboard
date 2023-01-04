@@ -21,8 +21,6 @@ let dashboard = {
             idIP.innerText = ip
         }
 
-        console.log(response);
-
     }
 }
 
@@ -33,8 +31,8 @@ let home = {
 
         var idFifa = document.getElementById("idFifaStanding")
 
-        await dashboard.ISSNow()
-        await dashboard.getIP()
+        dashboard.ISSNow()
+        dashboard.getIP()
 
         let payload = {
             "elementId": idFifa.id,

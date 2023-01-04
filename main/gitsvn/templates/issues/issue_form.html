@@ -26,7 +26,7 @@
       {{ field }}
     </div>
     <div class="col-auto">
-      <button type="submit" class="btn btn-primary mb-3">Search</button>
+      <button type="button" class="btn btn-primary mb-3" onclick="issues.buildList()">Search</button>
     </div>
 
     {% if field.errors %}
@@ -39,7 +39,7 @@
   </form>
   <hr class="my-4">
 
-  {% if issue_dict %}
+  <!-- {% if issue_dict %}
   <div class="my-3" style="font-family: Roboto">
   <h3 class="mb-3">Issue Details</h3>
 
@@ -52,10 +52,13 @@
       </div>
     </div>
     {% endfor %}
+  </div>
+  {% endif %} -->
 
-  {% endif %}
+  <div class="my-3" style="font-family: Roboto" id="idIssueDetail">
 
-</div>
+  </div>
+
 </div>
 
 {% endblock content %}
@@ -65,7 +68,7 @@
 <script src="{% static '/pages/gitsvn/gitsvn.js' %}" defer></script>
 
 <script>
-  document.getElementById("idIssueCreate").classList.remove("no-display")
+
   // dataTablesJS("#idIssueCreate")
 
 </script>

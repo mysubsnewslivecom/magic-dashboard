@@ -44,8 +44,9 @@ async function getResponse(url, method) {
     const response = await fetch(url, options);
 
     if (!response.ok) {
-        alert("Unable to fetch system details.");
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        log.toasts("error", `Unable to fetch system details. ${response.statusText}: ${url}`);
+        // throw new Error(`HTTP error! Status: ${response.status}`);
+        return ''
     }
     const data = await response.json();
     return await data;

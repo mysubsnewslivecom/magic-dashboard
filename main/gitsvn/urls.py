@@ -15,9 +15,9 @@ urlpatterns = [
     path(route="issue/list", view=IssueList.as_view(), name="git-issue-list"),
     path(route="issue/create", view=IssueCreate.as_view(), name="git-issue-create"),
     path(route="issue/edit", view=IssueFormView.as_view(), name="git-issue-edit"),
-    path(
-        route="issue/edit/<iid>",
-        view=IssueIdFormView.as_view(),
-        name="git-issue-id-edit",
-    ),
+    # path(
+    #     route="issue/edit/<iid>",
+    #     view=IssueIdFormView.as_view(),
+    #     name="git-issue-id-edit",
+    # ),
 ]

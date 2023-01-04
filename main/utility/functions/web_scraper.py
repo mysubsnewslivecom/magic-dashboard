@@ -1,9 +1,11 @@
 from typing import Optional
 
 import requests
+import urllib3
 from bs4 import BeautifulSoup as BS
 from django.conf import settings
 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class WebScrapping:
     def __init__(

@@ -16,8 +16,8 @@ SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 
 DEBUG = bool(getenv("DJANGO_DEBUG", "True") == "True")
 
-DEFAULT_HOST = ["127.0.0.1"]
-DJANGO_ALLOWED_HOST = getenv("DJANGO_ALLOWED_HOST", default="127.0.0.1").split(",")
+DEFAULT_HOST = ["127.0.0.1", "localhost"]
+DJANGO_ALLOWED_HOST = getenv("DJANGO_ALLOWED_HOST").split(",")
 ALLOWED_HOSTS = list(DEFAULT_HOST) + [
     host for host in DJANGO_ALLOWED_HOST if host not in DEFAULT_HOST
 ]
@@ -95,6 +95,9 @@ WSGI_APPLICATION = "rotary_phone.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
+
+DB_SRC = getenv("DB_SRC")
 
 DATABASE_URL = getenv("DATABASE_URL")
 

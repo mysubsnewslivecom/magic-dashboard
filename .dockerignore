@@ -1,0 +1,7 @@
+**/*
+!rotary_phone/
+!main/
+# !static/
+!templates/
+!manage.py
+!pyproject.toml

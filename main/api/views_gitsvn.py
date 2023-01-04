@@ -30,6 +30,10 @@ class GitlabIssuesViewset(ViewSet):
     @method_decorator(cache_page(CACHE_TTL))
     @method_decorator(vary_on_cookie)
     def retrieve(self, request, pk: int, *args, **kwargs):
+
+        # if int(pk) <= 0:
+        #     return Response(data={"error": "invalid id"}, status=status.HTTP_404_NOT_FOUND)
+
         gs = ResourceLocator().get_gitlab_issue()
         issue = gs.get_issue(pk)
         if isinstance(issue, str):
@@ -59,11 +63,10 @@ class GitlabIssuesViewset(ViewSet):
 
 class GitIssues(ViewSet):
     serializer_class = serializer.JsonSerializer
+
     @method_decorator(cache_page(CACHE_TTL))
     @method_decorator(vary_on_cookie)
     def list(self, request, *args, **kwargs):
         gs = ResourceLocator().get_gitlab_issue()
         projects = gs.get_all_issues()
         return Response(data=projects)
-
-
