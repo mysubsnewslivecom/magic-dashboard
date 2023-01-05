@@ -6,9 +6,14 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
+import socket
 
 from main.api import serializer
 from main.utility.functions import FifaEPLStandingScrapper
+from main.utility.functions import LoggingService
+
+
+log = LoggingService()
 
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 
@@ -40,4 +45,13 @@ class IPViewset(ViewSet):
     def list(self, request, *args, **kwargs):
 
         resp = requests.request(method="GET", url=settings.IPIFY_BASEURL)
+
+        # hostname = socket.gethostname()
+        # local_ip = socket.gethostbyname(hostname)
+
+        # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # s.connect(("8.8.8.8", 80))
+        # print(s.getsockname()[0])
+        # log.info(s.getsockname()[0])
+
         return Response(resp.json())
