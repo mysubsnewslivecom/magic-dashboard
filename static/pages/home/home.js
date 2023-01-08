@@ -24,6 +24,85 @@ let dashboard = {
     }
 }
 
+let task = {
+    getTodo: async () => {
+
+        let url = '/api/task/todo/'
+        let method = 'GET'
+        let response = await getResponse(url, method)
+
+        response.forEach(el => {
+            console.log(el);
+            task.buildList(response)
+        });
+
+        // return await response
+    },
+    createTodo: async () => {
+        var taskId = document.getElementById("new-task-input")
+        body = { "name": taskId.value, "status": false }
+        let url = '/api/task/todo/'
+        let method = 'POST'
+        let response = await getResponse(url, method, body)
+        console.log(response);
+        return await response
+
+    },
+    deleteTodo: async () => {
+
+        let url = `/api/task/todo/${id}`
+        let method = 'POST'
+        let response = await getResponse(url, method)
+        return await response
+
+    },
+    updateTodo: async () => {
+
+    },
+    buildList: async (data) => {
+
+        console.log(data);
+
+        let taskDiv = document.getElementById("tasks")
+        taskDiv.innerHTML = ""
+        // let response = await task.getTodo()
+
+            var divEl = document.createElement("div")
+            divEl.classList.add("list-group", "w-auto", "mb-1")
+
+            var labelEl = document.createElement("label")
+            labelEl.classList.add("list-group-item", "d-flex", "gap-3")
+
+            var inputCheckEl = document.createElement("input")
+            inputCheckEl.classList.add("form-check-input", "flex-shrink-0")
+            inputCheckEl.type = "checkbox"
+            inputCheckEl.style = "font-size: 1.375em;"
+            // inputCheckEl.checked = data["status"]
+            // inputCheckEl.value = data["status"]
+
+            var spanTitle = document.createElement("span")
+            spanTitle.classList.add("pt-1", "form-checked-content")
+
+            var inputEl = document.createElement("input")
+            inputEl.setAttribute("data-id", data["id"])
+            inputEl.type = "text"
+            inputEl.readOnly = true
+            inputEl.classList.add("form-control-plaintext")
+            inputEl.value = data["name"]
+
+            spanTitle.appendChild(inputEl)
+
+            labelEl.appendChild(inputCheckEl)
+            labelEl.appendChild(spanTitle)
+
+            divEl.appendChild(labelEl)
+
+            taskDiv.appendChild(divEl)
+
+    }
+}
+
+
 let home = {
     start: async () => {
         var idGitProjectsDiv = document.createElement("div")
@@ -66,6 +145,8 @@ let home = {
             "refreshCard": "refreshGitProjects"
         }
         await buildTable(payload)
+
+        task.buildList()
 
     }
 }

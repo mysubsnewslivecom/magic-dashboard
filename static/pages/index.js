@@ -1,3 +1,5 @@
+let arrayList = []
+
 function dataTablesJS(name) {
     console.log(`loading datatables ${name}!!!`)
     $(document).ready(function () {
@@ -20,6 +22,14 @@ function dataTablesJS(name) {
     })
 };
 
+function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
 
 function getCookie(name) {
     var cookieValue = null;
@@ -38,17 +48,22 @@ function getCookie(name) {
 }
 
 
-async function getResponse(url, method) {
+async function getResponse(url, method, ...args) {
 
-    let options = restMeta.options(method)
+    let options = restMeta.options(method, args[0])
     const response = await fetch(url, options);
+    const isJson = response.headers.get('content-type')?.includes('application/json');
 
     if (!response.ok) {
         log.toasts("error", `Unable to fetch system details. ${response.statusText}: ${url}`);
         // throw new Error(`HTTP error! Status: ${response.status}`);
         return ''
     }
-    const data = await response.json();
+    const data = isJson ? await response.json() : response.status;
+    // arrayList.push(JSON.stringify(data))
+
+    localStorage.setItem(url, JSON.stringify(data))
+
     return await data;
 }
 
@@ -65,12 +80,13 @@ let restMeta = {
     },
     options: (method, ...args) => {
         method = method.toUpperCase()
+        body = JSON.stringify(args[0])
         let options = {
             mode: 'cors',
             cache: 'default',
             method: method,
             headers: restMeta.headers(method),
-            body: (method === "PATCH" || method === "POST") ? args : null
+            body: (method == "PATCH" || method == "POST") ? body : null
         };
         return options
     }
@@ -261,7 +277,7 @@ async function createCard(element, ...args) {
     refreshButton.setAttribute("aria-expanded", "false")
     refreshButton.setAttribute("aria-controls", refreshTarget)
     refreshButton.style = "text-decoration: none; border: 1px dashed #61affe;"
-    refreshButton.innerHTML= '<i class="bi bi-arrow-clockwise"></i>'
+    refreshButton.innerHTML = '<i class="bi bi-arrow-clockwise"></i>'
 
     let rowChildH3 = document.createElement("h3")
     rowChildH3.classList.add("float-start")

@@ -48,6 +48,7 @@ LOCAL_APPS = [
     "main.authuser.apps.AuthuserConfig",
     "main.misc.apps.MiscConfig",
     "main.gitsvn.apps.GitsvnConfig",
+    "main.task.apps.TaskConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

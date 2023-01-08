@@ -4,8 +4,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 # from django.conf.urls import url
 from rest_framework import routers
 
-from main.api import views
-from main.api import views_gitsvn
+from main.api import views_gitsvn, views_task, views
 
 
 app_name = "api"
@@ -19,6 +18,7 @@ router.register(r"epl-standing", views.FifaEPLStanding, basename="home-epl-stand
 router.register(r"git/projects", views_gitsvn.GitsvnProjectViewset, basename="gitsvn-git-projects")
 router.register(r"git/issues/gitab", views_gitsvn.GitlabIssuesViewset, basename="gitsvn-git-issues-gitlab")
 router.register(r"git/issues", views_gitsvn.GitIssues, basename="gitsvn-git-issues")
+router.register(r"task/todo", views_task.TodoViewset, basename="task-todo")
 
 
 urlpatterns = [

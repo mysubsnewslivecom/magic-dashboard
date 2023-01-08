@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from main.task.models import Todo
 
 
 class GitlabIssueSerializer(serializers.Serializer):
@@ -38,3 +39,9 @@ class GitProjectSerializer(serializers.Serializer):
 
 class IPSerializer(serializers.Serializer):
     ip = serializers.CharField()
+
+
+class TodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Todo
+        fields = ("id", "status", "name", "is_active")
