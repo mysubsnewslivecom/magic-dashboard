@@ -1,0 +1,43 @@
+<div class="col-lg-3 col-6">
+  <div class="card">
+    <div class="card-header" data-bs-toggle="collapse" data-bs-target="#refreshTasksTodo1">
+      <div class="row">
+        <div class="col-md-12 bg-light text-right">
+          <button type="button" class="btn btn-link float-end" data-bs-toggle="collapse"
+            data-bs-target="#refreshTasksTodo" aria-expanded="false" aria-controls="refreshTasksTodo"
+            style="text-decoration: none; border: 1px dashed #61affe; ">
+            <i class="bi bi-arrows-expand"></i>
+          </button>
+          <button type="button" class="btn btn-link float-end"
+            data-bs-target="#refreshTasksTodo" aria-expanded="false" aria-controls="refreshTasksTodo"
+            onclick="javascript:task.buildList();" style="text-decoration: none; border: 1px dashed #61affe;">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+          <h3 class="float-start">Todo</h3>
+        </div>
+      </div>
+    </div>
+    <div class="collapse" id="refreshTasksTodo">
+      <div class="card-body">
+
+        <div class="d-flex mb-3 border-bottom" id="form-wrapper">
+          <div class="mb-0 small lh-sm p-2 w-100">
+            <form id="new-task-form" class="row g-3">
+              <div class="row col-auto">
+                <input type="text" class="form-control" id="new-task-input" placeholder="What do you have planned?" required />
+              </div>
+              <div class="col-auto pt-3">
+                <input type="button" class="btn btn-primary mb-3" id="new-task-submit" value="Add task" onclick="javascript:task.createTodo();" />
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="mb-0 small lh-sm p-2 w-100">
+          <div id="tasks" class="list-group w-auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
