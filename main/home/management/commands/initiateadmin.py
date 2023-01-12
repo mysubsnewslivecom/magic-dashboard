@@ -22,7 +22,7 @@ class Command(BaseCommand):
         if not user.exists():
             User.objects.create_superuser(
                 email=settings.DJANGO_SU_EMAIL,
-                username=username,
+                # username=username,
                 password=getenv("DJANGO_SU_PASSWORD"),
             )
             log.info(f"{settings.DJANGO_SU_NAME} user created")
