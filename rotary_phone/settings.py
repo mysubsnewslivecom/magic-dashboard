@@ -49,6 +49,7 @@ LOCAL_APPS = [
     "main.misc.apps.MiscConfig",
     "main.gitsvn.apps.GitsvnConfig",
     "main.task.apps.TaskConfig",
+    "main.mediamart.apps.MediamartConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

@@ -3,7 +3,11 @@
 
 {% block title %}{{ block.super }} - Home{% endblock title %}
 
-{% block css %}{% endblock css %}
+{% block css %}
+
+<link rel="stylesheet" href="{% static '/pages/home/home.css' %}">
+
+{% endblock css %}
 
 {% block headers %}Home{% endblock headers %}
 

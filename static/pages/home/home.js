@@ -31,28 +31,40 @@ let task = {
         let method = 'GET'
         let response = await getResponse(url, method)
 
+        let taskDiv = document.getElementById("tasks")
+        taskDiv.innerHTML = ""
+
         response.forEach(el => {
-            console.log(el);
-            task.buildList(response)
+            // console.log(el);
+            task.buildList(el)
         });
 
         // return await response
     },
     createTodo: async () => {
         var taskId = document.getElementById("new-task-input")
+
+        if (taskId.value.length == 0) {
+            log.toasts("error", "Task input is required!!!")
+            return
+        }
+
         body = { "name": taskId.value, "status": false }
         let url = '/api/task/todo/'
         let method = 'POST'
         let response = await getResponse(url, method, body)
-        console.log(response);
+        task.buildList(response)
+        taskId.value = ""
+        log.toasts("success", "Task added!")
         return await response
 
     },
-    deleteTodo: async () => {
+    deleteTodo: async (id) => {
 
-        let url = `/api/task/todo/${id}`
-        let method = 'POST'
-        let response = await getResponse(url, method)
+        body = { "is_active": false }
+        let url = `/api/task/todo/${id}/`
+        let method = 'PATCH'
+        let response = await getResponse(url, method, body)
         return await response
 
     },
@@ -61,10 +73,8 @@ let task = {
     },
     buildList: async (data) => {
 
-        console.log(data);
-
         let taskDiv = document.getElementById("tasks")
-        taskDiv.innerHTML = ""
+        // taskDiv.innerHTML = ""
         // let response = await task.getTodo()
 
             var divEl = document.createElement("div")
@@ -84,7 +94,7 @@ let task = {
             spanTitle.classList.add("pt-1", "form-checked-content")
 
             var inputEl = document.createElement("input")
-            inputEl.setAttribute("data-id", data["id"])
+            inputEl.setAttribute("data-id", data.id)
             inputEl.type = "text"
             inputEl.readOnly = true
             inputEl.classList.add("form-control-plaintext")
@@ -95,9 +105,51 @@ let task = {
             labelEl.appendChild(inputCheckEl)
             labelEl.appendChild(spanTitle)
 
-            divEl.appendChild(labelEl)
+            const task_actions_el = document.createElement('div');
+            task_actions_el.classList.add('actions');
+
+            const task_edit_el = document.createElement('button');
+            task_edit_el.id = `data-edit-${data.id}`
+            task_edit_el.classList.add('edit');
+            task_edit_el.innerText = 'Edit';
+
+            const task_delete_el = document.createElement('button');
+            task_delete_el.classList.add('delete');
+            task_delete_el.id = `data-delete-${data.id}`
+            task_delete_el.innerText = 'Delete';
+
+            task_actions_el.appendChild(task_edit_el);
+            task_actions_el.appendChild(task_delete_el);
+
+            labelEl.appendChild(task_actions_el);
+
+            divEl.appendChild(labelEl);
 
             taskDiv.appendChild(divEl)
+
+            var task_edit_el_btn = document.getElementById(`data-edit-${data.id}`);
+            task_edit_el_btn.addEventListener('click', (e) => {
+                if (task_edit_el_btn.innerText.toLowerCase() == "edit") {
+                    task_edit_el_btn.innerText = "Save";
+                    inputEl.removeAttribute("readonly");
+                    inputEl.focus();
+                } else {
+                    task_edit_el_btn.innerText = "Edit";
+                    inputEl.setAttribute("readonly", "readonly");
+                    inputEl.dataset.title = inputEl.value;
+                    // todo.patchTodo(inputEl.dataset)
+                    log.toasts("success", "Task saved!")
+                }
+            });
+
+            var task_delete_el_btn = document.getElementById(`data-delete-${data.id}`);
+            task_delete_el_btn.addEventListener('click', (e) => {
+                taskDiv.removeChild(divEl);
+                task.deleteTodo(data.id)
+            });
+
+            // divEl.appendChild(labelEl)
+
 
     }
 }
@@ -146,7 +198,7 @@ let home = {
         }
         await buildTable(payload)
 
-        task.buildList()
+        task.getTodo()
 
     }
 }

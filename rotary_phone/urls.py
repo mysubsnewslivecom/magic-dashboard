@@ -9,4 +9,5 @@ urlpatterns = [
     path("api/", include("main.api.urls")),
     path("misc/", include("main.misc.urls")),
     path("git/", include("main.gitsvn.urls")),
+    path("mediamart/", include("main.mediamart.urls")),
 ]
