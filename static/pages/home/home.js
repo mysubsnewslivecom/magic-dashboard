@@ -65,10 +65,17 @@ let task = {
         let url = `/api/task/todo/${id}/`
         let method = 'PATCH'
         let response = await getResponse(url, method, body)
+        log.toasts("success", "Task removed!")
         return await response
 
     },
-    updateTodo: async () => {
+    updateTodo: async (data) => {
+        body = data
+        let url = `/api/task/todo/${data.id}/`
+        let method = 'PATCH'
+        let response = await getResponse(url, method, body)
+        log.toasts("success", "Task updated!")
+        return await response
 
     },
     buildList: async (data) => {
@@ -77,78 +84,94 @@ let task = {
         // taskDiv.innerHTML = ""
         // let response = await task.getTodo()
 
-            var divEl = document.createElement("div")
-            divEl.classList.add("list-group", "w-auto", "mb-1")
+        var divEl = document.createElement("div")
+        divEl.classList.add("list-group", "w-auto", "mb-1")
 
-            var labelEl = document.createElement("label")
-            labelEl.classList.add("list-group-item", "d-flex", "gap-3")
+        var labelEl = document.createElement("label")
+        labelEl.classList.add("list-group-item", "d-flex", "gap-3")
 
-            var inputCheckEl = document.createElement("input")
-            inputCheckEl.classList.add("form-check-input", "flex-shrink-0")
-            inputCheckEl.type = "checkbox"
-            inputCheckEl.style = "font-size: 1.375em;"
-            // inputCheckEl.checked = data["status"]
-            // inputCheckEl.value = data["status"]
+        var inputCheckEl = document.createElement("input")
+        inputCheckEl.classList.add("form-check-input", "flex-shrink-0")
+        inputCheckEl.type = "checkbox"
+        inputCheckEl.style = "font-size: 1.375em;"
+        inputCheckEl.checked = data.status
+        inputCheckEl.id = `data-chk-${data.id}`
+        // inputCheckEl.value = data["status"]
 
-            var spanTitle = document.createElement("span")
-            spanTitle.classList.add("pt-1", "form-checked-content")
+        var spanTitle = document.createElement("span")
+        spanTitle.classList.add("pt-1", "form-checked-content")
 
-            var inputEl = document.createElement("input")
-            inputEl.setAttribute("data-id", data.id)
-            inputEl.type = "text"
-            inputEl.readOnly = true
-            inputEl.classList.add("form-control-plaintext")
-            inputEl.value = data["name"]
+        var inputEl = document.createElement("input")
+        inputEl.classList.add("form-control-plaintext")
+        inputEl.setAttribute("data-id", data.id)
+        inputEl.setAttribute('data-status', data.status)
+        inputEl.setAttribute('data-name', data.name)
+        inputEl.type = "text"
+        inputEl.readOnly = true
+        inputEl.value = data.name
 
-            spanTitle.appendChild(inputEl)
+        spanTitle.appendChild(inputEl)
 
-            labelEl.appendChild(inputCheckEl)
-            labelEl.appendChild(spanTitle)
+        labelEl.appendChild(inputCheckEl)
+        labelEl.appendChild(spanTitle)
 
-            const task_actions_el = document.createElement('div');
-            task_actions_el.classList.add('actions');
+        const task_actions_el = document.createElement('div');
+        task_actions_el.classList.add('actions');
 
-            const task_edit_el = document.createElement('button');
-            task_edit_el.id = `data-edit-${data.id}`
-            task_edit_el.classList.add('edit');
-            task_edit_el.innerText = 'Edit';
+        const task_edit_el = document.createElement('button');
+        task_edit_el.id = `data-edit-${data.id}`
+        task_edit_el.classList.add('edit');
+        task_edit_el.innerText = 'Edit';
 
-            const task_delete_el = document.createElement('button');
-            task_delete_el.classList.add('delete');
-            task_delete_el.id = `data-delete-${data.id}`
-            task_delete_el.innerText = 'Delete';
+        const task_delete_el = document.createElement('button');
+        task_delete_el.classList.add('delete');
+        task_delete_el.id = `data-delete-${data.id}`
+        task_delete_el.innerText = 'Delete';
 
-            task_actions_el.appendChild(task_edit_el);
-            task_actions_el.appendChild(task_delete_el);
+        task_actions_el.appendChild(task_edit_el);
+        task_actions_el.appendChild(task_delete_el);
 
-            labelEl.appendChild(task_actions_el);
+        labelEl.appendChild(task_actions_el);
 
-            divEl.appendChild(labelEl);
+        divEl.appendChild(labelEl);
 
-            taskDiv.appendChild(divEl)
+        taskDiv.appendChild(divEl)
 
-            var task_edit_el_btn = document.getElementById(`data-edit-${data.id}`);
-            task_edit_el_btn.addEventListener('click', (e) => {
-                if (task_edit_el_btn.innerText.toLowerCase() == "edit") {
-                    task_edit_el_btn.innerText = "Save";
-                    inputEl.removeAttribute("readonly");
-                    inputEl.focus();
-                } else {
-                    task_edit_el_btn.innerText = "Edit";
-                    inputEl.setAttribute("readonly", "readonly");
-                    inputEl.dataset.title = inputEl.value;
-                    // todo.patchTodo(inputEl.dataset)
-                    log.toasts("success", "Task saved!")
-                }
-            });
+        var task_edit_el_btn = document.getElementById(`data-edit-${data.id}`);
+        task_edit_el_btn.addEventListener('click', (e) => {
+            if (task_edit_el_btn.innerText.toLowerCase() == "edit") {
+                task_edit_el_btn.innerText = "Save";
+                inputEl.removeAttribute("readonly");
+                inputEl.focus();
+            } else {
+                task_edit_el_btn.innerText = "Edit";
+                inputEl.setAttribute("readonly", "readonly");
+                inputEl.dataset.name = inputEl.value;
+                inputEl.dataset.id = data.id;
+                task.updateTodo(inputEl.dataset)
+                // todo.patchTodo(inputEl.dataset)
+                // log.toasts("success", "Task saved!")
+            }
+        });
 
-            var task_delete_el_btn = document.getElementById(`data-delete-${data.id}`);
-            task_delete_el_btn.addEventListener('click', (e) => {
-                taskDiv.removeChild(divEl);
-                task.deleteTodo(data.id)
-            });
+        var task_delete_el_btn = document.getElementById(`data-delete-${data.id}`);
+        task_delete_el_btn.addEventListener('click', (e) => {
+            var dataset = {
+                "id": data.id,
+                "is_active": false
+            }
+            taskDiv.removeChild(divEl);
+            task.updateTodo(dataset)
+        });
 
-            // divEl.appendChild(labelEl)
+        var task_chk_el_btn = document.getElementById(`data-chk-${data.id}`);
+        task_chk_el_btn.addEventListener('click', (e) => {
+            var dataset = {
+                "id": data.id,
+                "status": !data.status
+            }
+            task.updateTodo(dataset)
+        });
 
 
     }
