@@ -15,29 +15,29 @@
 
 {% block content %}
 
-<div class="row">
-  {% include 'dashboard/section/iss.html' %}
-  {% include 'dashboard/section/ip.html' %}
+<div class="container-fluid">
+  <div class="row">
+    {% include 'dashboard/section/iss.html' %}
+    {% include 'dashboard/section/ip.html' %}
+  </div>
+
+  <div class="b-divider"></div>
+
+  <div id="idTodo" class="row">
+    {% include 'dashboard/section/todo.html' %}
+  </div>
+
+  <div class="b-divider"></div>
+
+  <div id="idFifaStanding"></div>
+
+  <div class="b-divider"></div>
 </div>
 
-<div class="b-divider"></div>
-
-<div id="idTodo" class="row">
-  {% include 'dashboard/section/todo.html' %}
-
-
-</div>
-
-<div class="b-divider"></div>
-
-<div id="idFifaStanding"></div>
-
-<div class="b-divider"></div>
 {% endblock content %}
 
 {% block js %}
 
-    <script src="{% static '/pages/home/home.js' %}" defer></script>
+<script src="{% static '/pages/home/home.js' %}" defer></script>
 
 {% endblock js %}
-
