@@ -2,6 +2,7 @@ from django import template
 
 register = template.Library()
 
+
 # @register.filter(name='loglevel')
 @register.simple_tag
 def log_level(value):

@@ -1,12 +1,6 @@
 from django.urls import path
 
-from main.gitsvn.views import (
-    IssueCreate,
-    IssueFormView,
-    IssueIdFormView,
-    IssueList,
-    ProjectList,
-)
+from main.gitsvn.views import IssueCreate, IssueFormView, IssueList, ProjectList
 
 app_name = "git"
 

@@ -63,6 +63,7 @@ class DailyTrackerManager(models.Manager):
         }
         return result
 
+
 class DailyTracker(PrimaryIdMixin, ActiveStatusMixin, TimestampMixin):
     rule_id = models.ForeignKey(
         "health.Rule",

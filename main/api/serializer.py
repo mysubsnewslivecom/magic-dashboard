@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from main.task.models import Todo
+
 from main.health.models import DailyTracker, Rule
+from main.task.models import Todo
 
 
 class GitlabIssueSerializer(serializers.Serializer):

@@ -17,7 +17,7 @@ SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 DEBUG = bool(getenv("DJANGO_DEBUG", "True") == "True")
 
 DEFAULT_HOST = ["127.0.0.1", "localhost"]
-DJANGO_ALLOWED_HOST = getenv("DJANGO_ALLOWED_HOST").split(",")
+DJANGO_ALLOWED_HOST = getenv("DJANGO_ALLOWED_HOST", "127.0.0.1").split(",")
 ALLOWED_HOSTS = list(DEFAULT_HOST) + [
     host for host in DJANGO_ALLOWED_HOST if host not in DEFAULT_HOST
 ]

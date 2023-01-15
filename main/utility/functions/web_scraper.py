@@ -7,6 +7,7 @@ from django.conf import settings
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+
 class WebScrapping:
     def __init__(
         self, url: Optional[str] = None, features: Optional[str] = "html.parser"

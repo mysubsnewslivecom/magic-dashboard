@@ -53,7 +53,7 @@ build-celery-beat:
 
 build-portal:
 	docker build . -t rotary-phone:local \
-		-f Dockerfiles/rotaryphone.Dockerfile \
+		-f dashboard.Dockerfile \
 		--build-arg IMAGE_NAME=python \
 		--build-arg IMAGE_TAG=3.10-alpine \
 		--build-arg DJANGO_PORT=9000 \

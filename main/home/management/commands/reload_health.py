@@ -32,9 +32,7 @@ class Command(BaseCommand):
             DailyTracker(date=date_today, rule_id=ri, status=False) for ri in rules_id
         ]
         DailyTracker.objects.filter(date=date_today, status=False).delete()
-        result = DailyTracker.objects.bulk_create(
-            data_tracker_obj, ignore_conflicts=True
-        )
+        DailyTracker.objects.bulk_create(data_tracker_obj, ignore_conflicts=True)
         log.debug("Setting DailyTracker data to cache")
         daily_tracker_today = DailyTracker.objects.get_daily_status()
         cache.set(
@@ -42,4 +40,3 @@ class Command(BaseCommand):
             daily_tracker_today,
             60 * 5,
         )
-

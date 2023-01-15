@@ -6,12 +6,9 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
-import socket
 
 from main.api import serializer
-from main.utility.functions import FifaEPLStandingScrapper
-from main.utility.functions import LoggingService
-
+from main.utility.functions import FifaEPLStandingScrapper, LoggingService
 
 log = LoggingService()
 
