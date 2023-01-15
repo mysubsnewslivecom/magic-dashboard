@@ -7,9 +7,9 @@ let health = {
         return response
     },
     buildRules: async () => {
+        let idRules = document.getElementById("idRules")
         let response = await health.fetchRules()
         log.toasts("success", "Rules fetched")
-        let idRules = document.getElementById("idRules")
         idRules.innerHTML = ""
         idRules.appendChild(jsonPrettyHTML(response))
     }
