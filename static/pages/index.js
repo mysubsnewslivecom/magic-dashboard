@@ -244,6 +244,7 @@ async function createCard(element, ...args) {
 
     var title = args[0]
     var refreshTarget = args[1]
+    var refreshOnClick = args[2]
 
     let parentCardDiv = document.createElement("div")
     parentCardDiv.classList.add("col-lg-12", "col-12")
@@ -273,15 +274,18 @@ async function createCard(element, ...args) {
     let refreshButton = document.createElement("button")
     refreshButton.type = "button"
     refreshButton.classList.add("btn", "btn-link", "float-end")
-    refreshButton.setAttribute("data-bs-target", `#${refreshTarget}`)
+    // refreshButton.setAttribute("data-bs-target", `#${refreshTarget}`)
     refreshButton.setAttribute("aria-expanded", "false")
     refreshButton.setAttribute("aria-controls", refreshTarget)
     refreshButton.style = "text-decoration: none; border: 1px dashed #61affe;"
     refreshButton.innerHTML = '<i class="bi bi-arrow-clockwise"></i>'
+    refreshButton.setAttribute("onclick", refreshOnClick)
 
     let rowChildH3 = document.createElement("h3")
     rowChildH3.classList.add("float-start")
     rowChildH3.innerText = title
+    rowChildH3.setAttribute("data-bs-toggle", "collapse")
+    rowChildH3.setAttribute("data-bs-target", `#${refreshTarget}`)
 
     rowChild.appendChild(rowChildH3)
     rowChild.appendChild(collapseButton)
@@ -292,7 +296,7 @@ async function createCard(element, ...args) {
     cardHeader.appendChild(row)
 
     let parentCardBodyDiv = document.createElement("div")
-    parentCardBodyDiv.classList.add("collapse", "xxx")
+    parentCardBodyDiv.classList.add("collapse", "show")
     parentCardBodyDiv.id = refreshTarget
 
     let cardBody = document.createElement("div")
@@ -315,7 +319,7 @@ async function createCard(element, ...args) {
 }
 
 function jsonPretty(value) {
-    return JSON.stringify(value,null,4);
+    return JSON.stringify(value, null, 4);
 }
 
 function jsonPrettyHTML(value) {

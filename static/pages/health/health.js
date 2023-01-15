@@ -7,11 +7,13 @@ let health = {
         return response
     },
     buildRules: async () => {
-        let idRules = document.getElementById("idRules")
+        let idRulesCardDiv = document.getElementById("idRulesCardDiv")
         let response = await health.fetchRules()
+        let card = await createCard(jsonPrettyHTML(response), "Rules", "collapseIdRules", "javascript:health.buildRules()")
+        idRulesCardDiv.innerHTML = ""
+        idRulesCardDiv.appendChild(card)
         log.toasts("success", "Rules fetched")
-        idRules.innerHTML = ""
-        idRules.appendChild(jsonPrettyHTML(response))
+
     }
 }
 
