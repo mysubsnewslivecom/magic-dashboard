@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from main.task.models import Todo
+from main.health.models import DailyTracker, Rule
 
 
 class GitlabIssueSerializer(serializers.Serializer):
@@ -45,3 +46,16 @@ class TodoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todo
         fields = ("id", "status", "name", "is_active")
+
+
+class RulesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rule
+        fields = ("name", "is_active")
+
+
+class DailyTrackerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyTracker
+        fields = ("date", "status", "id", "rule_id")
+        lookup_field = "date"

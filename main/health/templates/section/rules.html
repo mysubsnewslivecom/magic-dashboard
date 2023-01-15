@@ -1,0 +1,56 @@
+<div class="col-lg-6 col-6">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-12 bg-light text-right">
+          <button type="button" class="btn btn-link float-end" data-bs-toggle="collapse"
+            data-bs-target="#collapseIdRules" aria-expanded="false" aria-controls="collapseIdRules"
+            style="text-decoration: none; border: 1px dashed #61affe; ">
+            <i class="bi bi-arrows-expand"></i>
+          </button>
+          <button type="button" class="btn btn-link float-end" aria-expanded="false" aria-controls="collapseIdRules"
+            onclick="javascript:health.buildRules();" style="text-decoration: none; border: 1px dashed #61affe;">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+          <h3 class="float-start" data-bs-toggle="collapse"
+          data-bs-target="#collapseIdRules" >Rules</h3>
+        </div>
+      </div>
+    </div>
+    <div class="collapse collapse show" id="collapseIdRules">
+      <div class="card-body">
+        <div id="idRules"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-3 col-6">
+  <div class="card">
+    <div class="card-header" data-bs-toggle="collapse" data-bs-target="#refreshHealthRules1">
+      <div class="row">
+        <div class="col-md-12 bg-light text-right">
+          <button type="button" class="btn btn-link float-end" data-bs-toggle="collapse"
+            data-bs-target="#refreshHealthRules" aria-expanded="false" aria-controls="refreshHealthRules"
+            style="text-decoration: none; border: 1px dashed #61affe; ">
+            <i class="bi bi-arrows-expand"></i>
+          </button>
+          <button type="button" class="btn btn-link float-end"
+            data-bs-target="#refreshHealthRules" aria-expanded="false" aria-controls="refreshHealthRules"
+            onclick="javascript:health.rules();" style="text-decoration: none; border: 1px dashed #61affe;">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+          <h3 class="float-start">Rules</h3>
+        </div>
+      </div>
+    </div>
+    <div class="collapse collapse-horizontal" id="refreshHealthRules">
+      <div class="card-body">
+        <form id="idPatchRuleForm" method="PATCH">
+          <div id="idRulesList"></div>
+        <form>
+      </div>
+    </div>
+  </div>
+</div>
+

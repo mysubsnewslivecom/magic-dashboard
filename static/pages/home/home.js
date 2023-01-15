@@ -231,6 +231,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
     document.getElementById("loader").style.display = "block";
     await home.start()
     document.getElementById("loader").style.display = "none";
+    document.getElementById("idHomeContainer").classList.remove("no-display")
 
     log.toasts("success", "DOM fully loaded and parsed")
 

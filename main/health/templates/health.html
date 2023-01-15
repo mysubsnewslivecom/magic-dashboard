@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ block.super }} - Health{% endblock title %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static '/pages/health/health.css' %}">
+
+{% endblock css %}
+
+{% block headers %}Health{% endblock headers %}
+
+{% block headerbuttons %}{% endblock headerbuttons %}
+
+{% block content %}
+
+<div class="container-fluid no-display" id="idHealthHomeContainer">
+  <div class="row">
+      {% include 'section/rules.html' %}
+  </div>
+
+  <div class="b-divider"></div>
+
+</div>
+
+{% endblock content %}
+
+{% block js %}
+
+<script src="{% static '/pages/health/health.js' %}" defer></script>
+
+{% endblock js %}

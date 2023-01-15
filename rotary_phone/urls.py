@@ -10,4 +10,5 @@ urlpatterns = [
     path("misc/", include("main.misc.urls")),
     path("git/", include("main.gitsvn.urls")),
     path("mediamart/", include("main.mediamart.urls")),
+    path("health/", include("main.health.urls")),
 ]

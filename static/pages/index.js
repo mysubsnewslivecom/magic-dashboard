@@ -313,3 +313,16 @@ async function createCard(element, ...args) {
     return parentCardDiv
 
 }
+
+function jsonPretty(value) {
+    return JSON.stringify(value,null,4);
+}
+
+function jsonPrettyHTML(value) {
+
+    var codeEl = document.createElement("code")
+    codeEl.innerText = jsonPretty(value)
+    var preEl = document.createElement("pre")
+    preEl.appendChild(codeEl)
+    return preEl
+}

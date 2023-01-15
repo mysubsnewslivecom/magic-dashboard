@@ -17,7 +17,5 @@ class TodoViewset(viewsets.ModelViewSet):
     queryset = Todo.objects.all()
 
     def list(self, request, *args, **kwargs):
-        # super().retrieve(request, *args, **kwargs)
         data = Todo.objects.filter(is_active=True)
-        log.info(list(data))
         return Response(list(data.values()))
