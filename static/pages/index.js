@@ -57,7 +57,14 @@ async function getResponse(url, method, ...args) {
     if (!response.ok) {
         log.toasts("error", `Unable to fetch system details. ${response.statusText}: ${url}`);
         // throw new Error(`HTTP error! Status: ${response.status}`);
-        return ''
+
+        let error = {
+            "error": {
+                "status": response.status,
+                "error": response.statusText
+            }
+        }
+        return error
     }
     const data = isJson ? await response.json() : response.status;
     // arrayList.push(JSON.stringify(data))
@@ -224,8 +231,8 @@ async function createTable(...args) {
 
 
 async function buildTable(payload) {
-    const { elementId, url, method, exclusionList, tableId, cardTitle, refreshCard } = payload
-    let idElement = document.getElementById(elementId)
+    const { id, url, method, exclusionList, tableId, cardTitle, refreshCard } = payload
+    let idElement = document.getElementById(id)
     if (idElement) {
         let response = await getResponse(url, method)
         let table = await createTable(response, exclusionList, tableId)

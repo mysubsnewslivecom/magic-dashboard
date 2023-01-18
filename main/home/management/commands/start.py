@@ -5,8 +5,8 @@ from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        call_command("wait_db")
-        call_command("wait_redis")
+        call_command("wait-for-db")
+        call_command("wait-for-redis")
         call_command("makemigrations")
         call_command("migrate")
         call_command("initiateadmin")

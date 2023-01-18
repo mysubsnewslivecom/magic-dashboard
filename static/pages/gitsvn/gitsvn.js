@@ -34,12 +34,11 @@ let issues = {
         let data = await issues.getIssues(id)
         var idIssueDetail = document.getElementById("idIssueDetail")
 
-        if (data.length === 0) {
+        if (data.length === 0 || Object.keys(data)[0] == "error") {
             document.getElementById("loader").style.display = "none";
             idIssueDetail.innerHTML = ""
         }
         else {
-
             var issueDetailDiv = document.createElement("div")
             issueDetailDiv.classList.add("my-3")
             issueDetailDiv.style = "font-family: Roboto"

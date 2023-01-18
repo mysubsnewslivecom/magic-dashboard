@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from main.api import serializer
@@ -18,4 +19,9 @@ class TodoViewset(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = Todo.objects.filter(is_active=True)
-        return Response(list(data.values()))
+        return Response(list(data.values()), status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'])
+    def pending(self, request):
+        pending = Todo.objects.filter(is_active=True, status=False)
+        return Response(list(pending.values()), status=status.HTTP_200_OK)

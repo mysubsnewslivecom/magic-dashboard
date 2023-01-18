@@ -20,7 +20,6 @@ let dashboard = {
             const { ip } = response
             idIP.innerText = ip
         }
-
     }
 }
 
@@ -35,11 +34,8 @@ let task = {
         taskDiv.innerHTML = ""
 
         response.forEach(el => {
-            // console.log(el);
             task.buildList(el)
         });
-
-        // return await response
     },
     createTodo: async () => {
         var taskId = document.getElementById("new-task-input")
@@ -48,16 +44,17 @@ let task = {
             log.toasts("error", "Task input is required!!!")
             return
         }
-
         body = { "name": taskId.value, "status": false }
         let url = '/api/task/todo/'
         let method = 'POST'
         let response = await getResponse(url, method, body)
+        if (Object.keys(response)[0] == "error") {
+            return
+        }
         task.buildList(response)
         taskId.value = ""
         log.toasts("success", "Task added!")
         return await response
-
     },
     deleteTodo: async (id) => {
 
@@ -81,8 +78,6 @@ let task = {
     buildList: async (data) => {
 
         let taskDiv = document.getElementById("tasks")
-        // taskDiv.innerHTML = ""
-        // let response = await task.getTodo()
 
         var divEl = document.createElement("div")
         divEl.classList.add("list-group", "w-auto", "mb-1")
@@ -96,7 +91,6 @@ let task = {
         inputCheckEl.style = "font-size: 1.375em;"
         inputCheckEl.checked = data.status
         inputCheckEl.id = `data-chk-${data.id}`
-        // inputCheckEl.value = data["status"]
 
         var spanTitle = document.createElement("span")
         spanTitle.classList.add("pt-1", "form-checked-content")
@@ -149,8 +143,6 @@ let task = {
                 inputEl.dataset.name = inputEl.value;
                 inputEl.dataset.id = data.id;
                 task.updateTodo(inputEl.dataset)
-                // todo.patchTodo(inputEl.dataset)
-                // log.toasts("success", "Task saved!")
             }
         });
 
@@ -172,8 +164,6 @@ let task = {
             }
             task.updateTodo(dataset)
         });
-
-
     }
 }
 
@@ -189,7 +179,7 @@ let home = {
         dashboard.getIP()
 
         let payload = {
-            "elementId": idFifa.id,
+            "id": idFifa.id,
             "url": "/api/epl-standing/",
             "method": "GET",
             "exclusionList": "",
@@ -211,7 +201,7 @@ let home = {
         }
 
         payload = {
-            "elementId": idGitProjectsDiv.id,
+            "id": idGitProjectsDiv.id,
             "url": "/api/git/projects/",
             "method": "GET",
             "exclusionList": "",

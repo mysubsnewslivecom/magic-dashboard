@@ -5,7 +5,7 @@ from main.utility.mixins import ActiveStatusMixin, PrimaryIdMixin, TimestampMixi
 
 
 class Todo(PrimaryIdMixin, TimestampMixin, ActiveStatusMixin):
-    name = models.CharField(_("Task Name"), max_length=50)
+    name = models.CharField(_("Task Name"), max_length=150)
     status = models.BooleanField(_("Status"), default=False)
 
     class Meta:
