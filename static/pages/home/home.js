@@ -167,7 +167,6 @@ let task = {
     }
 }
 
-
 let home = {
     start: async () => {
         var idGitProjectsDiv = document.createElement("div")

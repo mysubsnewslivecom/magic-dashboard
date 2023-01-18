@@ -14,6 +14,27 @@ let health = {
         idRulesCardDiv.appendChild(card)
         log.toasts("success", "Rules fetched")
 
+    },
+    addRules: async () => {
+
+        var formEl = document.getElementById("idAddRuleForm")
+
+        let rule = document.getElementById("idRuleInput")
+        if (rule.value.length == 0 ) {
+            log.toasts("error", "input is required")
+            return
+        }
+        body = {
+            "name": rule.value
+        }
+        let url = formEl.action
+        let method = 'POST'
+        let response = await getResponse(url, method, body)
+        rule.value = ""
+        health.buildRules()
+
+
+
     }
 }
 

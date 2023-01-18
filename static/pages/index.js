@@ -47,7 +47,6 @@ function getCookie(name) {
     return cookieValue;
 }
 
-
 async function getResponse(url, method, ...args) {
 
     let options = restMeta.options(method, args[0])
@@ -180,6 +179,10 @@ let log = {
             const toaster = new bootstrap.Toast(toast)
             toaster.show()
         }
+    },
+    showMessage: (message, type = 'success') => {
+        let messageEl = document.getElementById("idInvalidFeedback")
+        messageEl.innerText = `${message}`;
     }
 }
 
@@ -229,7 +232,6 @@ async function createTable(...args) {
     return table
 }
 
-
 async function buildTable(payload) {
     const { id, url, method, exclusionList, tableId, cardTitle, refreshCard } = payload
     let idElement = document.getElementById(id)
@@ -245,7 +247,6 @@ async function buildTable(payload) {
         console.log(`div ${elementId} not found!`);
     }
 }
-
 
 async function createCard(element, ...args) {
 
