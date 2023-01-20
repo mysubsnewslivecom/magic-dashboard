@@ -91,6 +91,7 @@ let task = {
         inputCheckEl.style = "font-size: 1.375em;"
         inputCheckEl.checked = data.status
         inputCheckEl.id = `data-chk-${data.id}`
+        inputCheckEl.maxLength = 150
 
         var spanTitle = document.createElement("span")
         spanTitle.classList.add("pt-1", "form-checked-content")
