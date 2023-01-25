@@ -338,3 +338,19 @@ function jsonPrettyHTML(value) {
     preEl.appendChild(codeEl)
     return preEl
 }
+
+
+// btn = document.querySelector('#btnSubmit');
+// form = document.querySelector('#idAddRuleForm');
+
+
+// btn.addEventListener('click', (e) => {
+//     // prevent the form from submitting
+//     e.preventDefault();
+
+//     // show the form values
+//     const formData = new FormData(form);
+//     const values = [...formData.values()];
+//     console.log(values);
+// });
+

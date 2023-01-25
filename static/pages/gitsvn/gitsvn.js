@@ -39,9 +39,10 @@ let issues = {
             idIssueDetail.innerHTML = ""
         }
         else {
-            var issueDetailDiv = document.createElement("div")
+            var issueDetailDiv = document.createElement("form")
             issueDetailDiv.classList.add("my-3")
             issueDetailDiv.style = "font-family: Roboto"
+            issueDetailDiv.id = "idIssueForm"
 
             var h3El = document.createElement("h3")
             h3El.classList.add("mb-3")
@@ -78,11 +79,30 @@ let issues = {
 
             }
             idIssueDetail.innerHTML = ""
+            var issueDetailDivForm = document.createElement("button")
+            issueDetailDivForm.type = "submit"
+            issueDetailDivForm.id = "submit"
+            issueDetailDivForm.classList.add("btn", "btn-info")
+            issueDetailDiv.appendChild(issueDetailDivForm)
             idIssueDetail.appendChild(issueDetailDiv)
+
             document.getElementById("loader").style.display = "none";
 
-        }
+            // const btn = document.querySelector('#submit');
+            // const form = document.querySelector('#idIssueForm');
 
+
+            // btn.addEventListener('click', (e) => {
+            //     // prevent the form from submitting
+            //     e.preventDefault();
+
+            //     // show the form values
+            //     const formData = new FormData(form);
+            //     const values = [...formData.entries()];
+            //     console.log(values);
+            // });
+
+        }
     }
 }
 
@@ -100,5 +120,4 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     console.log('DOM fully loaded and parsed. base.html');
 });
-
 

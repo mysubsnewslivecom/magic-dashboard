@@ -101,3 +101,23 @@ class DailyTracker(PrimaryIdMixin, ActiveStatusMixin, TimestampMixin):
             "completed": completed,
         }
         return result
+
+
+class FitbitDailyActivity(PrimaryIdMixin, ActiveStatusMixin, TimestampMixin):
+    date = models.DateField(_("Date"), default=tz.localdate)
+    calories_burned = models.IntegerField(_("Calories Burned"))
+    steps = models.IntegerField(_("Steps"))
+    distance = models.FloatField(_("Distance"))
+    floors = models.IntegerField(_("Floors"))
+    minutes_sedentary = models.IntegerField(_("Minutes sedentary"))
+    minutes_lightly_active = models.IntegerField(_("Minutes lightly active"))
+    minutes_fairly_active = models.IntegerField(_("Minutes fairly active"))
+    minutes_very_active = models.IntegerField(_("Minutes very active"))
+    activity_calories = models.IntegerField(_("Activity Calories"))
+
+    class Meta:
+        ordering = ["-id"]
+        verbose_name_plural = "FitbitDailyActivity"
+
+    def __str__(self) -> str:
+        return str(self.date)
