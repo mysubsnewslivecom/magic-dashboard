@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from main.health.models import DailyTracker, Rule
+from main.health.models import DailyTracker, Rule, FitbitDailyActivity
 from main.task.models import Todo
 
 
@@ -59,4 +59,11 @@ class DailyTrackerSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyTracker
         fields = ("date", "status", "id", "rule_id")
+        lookup_field = "date"
+
+
+class FitbitDailyActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FitbitDailyActivity
+        fields = ("date", "calories_burned", "steps", "distance", "floors")
         lookup_field = "date"

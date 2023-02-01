@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from main.api import serializer
-from main.health.models import DailyTracker, Rule
+from main.health.models import DailyTracker, Rule, FitbitDailyActivity
 from main.utility.functions import LoggingService
 from main.utility.mixins import EnablePartialUpdateMixin
 
@@ -69,3 +69,17 @@ class DailyActivityViewset(EnablePartialUpdateMixin, viewsets.ModelViewSet):
         message = {"message": f"{result} record updated."}
 
         return Response(data=message, status=status.HTTP_202_ACCEPTED)
+
+
+
+class FitbitDailyActivityViewset(viewsets.ModelViewSet):
+    queryset = FitbitDailyActivity.objects.all()
+    serializer_class = serializer.FitbitDailyActivitySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = "date"
+    http_method_names = ["get"]
+
+
+    def list(self, request, *args, **kwargs):
+        data = FitbitDailyActivity.objects.get_last_week()
+        return Response(list(data.values()), status=status.HTTP_200_OK)

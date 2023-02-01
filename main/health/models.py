@@ -103,6 +103,18 @@ class DailyTracker(PrimaryIdMixin, ActiveStatusMixin, TimestampMixin):
         return result
 
 
+class FitbitDailyActivityManager(models.Manager):
+
+    def get_last_week(self):
+        from datetime import date, timedelta
+
+        last_date = FitbitDailyActivity.objects.latest("date").date
+        enddate = last_date - timedelta(days=7)
+        # FitbitDailyActivity.objects.filter(date__range=[startdate, enddate])
+        result = FitbitDailyActivity.objects.filter(date__gte=enddate).order_by("date")
+
+        return result
+
 class FitbitDailyActivity(PrimaryIdMixin, ActiveStatusMixin, TimestampMixin):
     date = models.DateField(_("Date"), default=tz.localdate)
     calories_burned = models.IntegerField(_("Calories Burned"))
@@ -114,6 +126,7 @@ class FitbitDailyActivity(PrimaryIdMixin, ActiveStatusMixin, TimestampMixin):
     minutes_fairly_active = models.IntegerField(_("Minutes fairly active"))
     minutes_very_active = models.IntegerField(_("Minutes very active"))
     activity_calories = models.IntegerField(_("Activity Calories"))
+    objects = FitbitDailyActivityManager()
 
     class Meta:
         ordering = ["-id"]

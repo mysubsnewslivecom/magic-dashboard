@@ -168,6 +168,100 @@ let task = {
     }
 }
 
+let health = {
+    generateHealth: async () => {
+        let steps_arr = Array()
+        let distance_arr = Array()
+        let floor_arr = Array()
+        let cal_arr = Array()
+        let date_arr = Array()
+
+        let resp = await getResponse('/api/health/fitbit/', 'GET')
+
+        resp.forEach(el => {
+            cal_arr.push(el["calories_burned"])
+            steps_arr.push(el["steps"])
+            distance_arr.push(el["distance"] * 1000)
+            floor_arr.push(el["floor"])
+            date_arr.push(el["date"])
+        })
+
+        steps_avg = 0;
+        distance_avg = 0;
+
+        steps_arr.forEach(items => {
+            steps_avg += items
+        })
+
+        distance_arr.forEach(items => {
+            distance_avg += items
+        })
+
+        document.getElementById("idAverage").innerText = Math.round(steps_avg/steps_arr.length)
+        document.getElementById("idAverageDistance").innerText = Math.round(distance_avg/distance_arr.length)
+
+        const ctx = document.getElementById('myChart');
+
+        let chartStatus = Chart.getChart("myChart"); // <canvas> id
+        if (chartStatus != undefined) {
+            chartStatus.destroy();
+        }
+
+        new Chart(ctx, {
+            data: {
+                labels: date_arr,
+                datasets: [{
+                    type: 'line',
+                    label: '# of steps',
+                    data: steps_arr,
+                    borderWidth: 1
+                },
+                {
+                    type: 'line',
+                    label: '# of distance',
+                    data: distance_arr,
+                    borderWidth: 1
+                },
+                {
+                    type: 'line',
+                    label: '# of calories',
+                    data: cal_arr,
+                    borderWidth: 1
+                }]
+            },
+
+
+            options: {
+                animations: {
+                    tension: {
+                        duration: 1000,
+                        easing: 'linear',
+                        from: 1,
+                        to: 0,
+                        loop: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        min: 0,
+                        // max: 100
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Fitbit data',
+                        align: 'center'
+                    }
+                }
+            }
+
+
+        });
+    }
+}
+
 let home = {
     start: async () => {
         var idGitProjectsDiv = document.createElement("div")
@@ -212,6 +306,8 @@ let home = {
         await buildTable(payload)
 
         task.getTodo()
+
+        health.generateHealth()
 
     }
 }

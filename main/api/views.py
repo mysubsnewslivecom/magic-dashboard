@@ -1,4 +1,3 @@
-import requests
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.utils.decorators import method_decorator
@@ -8,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from main.api import serializer
-from main.utility.functions import FifaEPLStandingScrapper, LoggingService
+from main.utility.functions import FifaEPLStandingScrapper, GetRequests, LoggingService
 
 log = LoggingService()
 
@@ -20,8 +19,9 @@ class ISSLocation(ViewSet):
 
     def list(self, request, *args, **kwargs):
 
-        resp = requests.request(method="GET", url=settings.ISS_LOCATION)
-        return Response(resp.json())
+        resp = GetRequests(url=settings.ISS_LOCATION).get_request()
+
+        return Response(data=resp)
 
 
 class FifaEPLStanding(ViewSet):
@@ -41,8 +41,6 @@ class IPViewset(ViewSet):
 
     def list(self, request, *args, **kwargs):
 
-        resp = requests.request(method="GET", url=settings.IPIFY_BASEURL)
-
         # hostname = socket.gethostname()
         # local_ip = socket.gethostbyname(hostname)
 
@@ -50,5 +48,6 @@ class IPViewset(ViewSet):
         # s.connect(("8.8.8.8", 80))
         # print(s.getsockname()[0])
         # log.info(s.getsockname()[0])
+        resp = GetRequests(url=settings.IPIFY_BASEURL).get_request()
 
-        return Response(resp.json())
+        return Response(data=resp)

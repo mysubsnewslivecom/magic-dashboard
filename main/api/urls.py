@@ -36,6 +36,9 @@ router.register(
 router.register(
     r"health/dt", viewset=views_health.DailyActivityViewset, basename="health-dt"
 )
+router.register(
+    r"health/fitbit", viewset=views_health.FitbitDailyActivityViewset, basename="health-fitbit"
+)
 
 
 urlpatterns = [
