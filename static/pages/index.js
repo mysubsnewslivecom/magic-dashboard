@@ -99,26 +99,36 @@ let restMeta = {
 }
 
 let log = {
-    toasts: (type, desc) => {
+    bgColor: (type) => {
 
         var textColor = "text-dark"
 
         if (type.toLowerCase() === "success") {
-            bg = "bg-success"
-            textColor = "text-dark"
+            bg = "bg-success";
+            textColor = "text-dark";
         }
         else if (type.toLowerCase() === "error") {
-            bg = "bg-danger"
-            textColor = "text-white"
+            bg = "bg-danger";
+            textColor = "text-white";
 
         }
         else if (type.toLowerCase() === "warn") {
-            bg = "bg-warning"
-            textColor = "text-white"
+            bg = "bg-warning";
+            textColor = "text-white";
         }
         else {
-            bg = "bg-info"
+            bg = "bg-info";
         }
+
+        var output = new Object()
+        output.bg = bg
+        output.textColor = textColor
+
+        return output
+    },
+    toasts: (type, desc) => {
+
+        var { bg, textColor } = log.bgColor(type);
 
         let toastContainer = document.querySelector(".toast-container")
 
@@ -179,10 +189,48 @@ let log = {
             const toaster = new bootstrap.Toast(toast)
             toaster.show()
         }
+
     },
     showMessage: (message, type = 'success') => {
         let messageEl = document.getElementById("idInvalidFeedback")
-        messageEl.innerText = `${message}`;
+        if (messageEl) {
+            messageEl.innerHTML = `<h6 class="bg-success">${message}</h6>`;
+            console.log(message);
+        }
+    },
+    notification: (title, message, ...args) => {
+        if ('Notification' in window) {
+            if (Notification.permission === 'granted') {
+                log.notify(title, message, ...args)
+            } else {
+                Notification.requestPermission().then((res) => {
+                    if (res === 'granted') {
+                        log.notify(title, message, ...args)
+                    } else if (res === 'denied') {
+                        console.log('Notification access denied');
+                    } else if (res === 'default') {
+                        console.log('Notification permission not given');
+                    }
+                })
+            }
+        } else {
+            console.log("Notification not supported")
+        }
+    },
+    notify(title, message, ...args) {
+        const notification = new Notification(title, {
+            body: message,
+            icon: '/static/dist/img/favicon_io/favicon.ico',
+            vibrate: [200, 100, 200]
+        });
+
+        notification.addEventListener('click', () => {
+            window.open('http://127.0.0.1:9000')
+        })
+
+        setTimeout(() => {
+            notification.close();
+        }, 5000)
     }
 }
 

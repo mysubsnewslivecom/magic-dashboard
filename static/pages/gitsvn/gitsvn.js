@@ -68,6 +68,8 @@ let issues = {
                 inputEl.readOnly = true
                 inputEl.classList.add("form-control-plaintext")
                 inputEl.id = `id${key}`
+                inputEl.name = `${key}`
+
                 inputEl.value = val
 
                 divChildEl.appendChild(inputEl)
@@ -80,17 +82,17 @@ let issues = {
             }
             idIssueDetail.innerHTML = ""
             var issueDetailDivForm = document.createElement("button")
-            issueDetailDivForm.type = "submit"
+            issueDetailDivForm.type = "button"
             issueDetailDivForm.id = "submit"
+            issueDetailDivForm.textContent = "Submit"
             issueDetailDivForm.classList.add("btn", "btn-info")
             issueDetailDiv.appendChild(issueDetailDivForm)
             idIssueDetail.appendChild(issueDetailDiv)
 
             document.getElementById("loader").style.display = "none";
 
-            // const btn = document.querySelector('#submit');
-            // const form = document.querySelector('#idIssueForm');
-
+            const btn = document.querySelector('#submit');
+            const form = document.querySelector('#idIssueForm');
 
             // btn.addEventListener('click', (e) => {
             //     // prevent the form from submitting
@@ -102,6 +104,25 @@ let issues = {
             //     console.log(values);
             // });
 
+            btn.addEventListener('click', async (e) => {
+
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const values = [...formData.entries()];
+                // var jsonvar = {}
+                var jsonvar = new Object()
+                values.forEach(el => {
+                    jsonvar[el[0]] = el[1]
+                });
+                console.log(jsonvar);
+                await fetch('https://httpbin.org/post', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(res => res.json())
+                    .then(res => console.log(res))
+            });
         }
     }
 }
@@ -120,4 +141,5 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     console.log('DOM fully loaded and parsed. base.html');
 });
+
 
