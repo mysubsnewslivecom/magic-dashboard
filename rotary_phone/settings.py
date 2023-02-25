@@ -2,23 +2,29 @@ from os import getenv, path
 from pathlib import Path
 
 import dj_database_url
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from loguru import logger
 from rotary_phone.app_config import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = path.dirname(path.abspath(__file__))
-dotenv_path = path.join(BASE_DIR, ".env")
-load_dotenv(dotenv_path)
+# dotenv_path = path.join(BASE_DIR, ".env")
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+# load_dotenv(dotenv_path)
 
-SECRET_KEY = getenv("DJANGO_SECRET_KEY")
+SECRET_KEY = getenv("DJANGO_SECRET_KEY", "default")
 
 DEBUG = bool(getenv("DJANGO_DEBUG", "True") == "True")
 
 DEFAULT_HOST = ["127.0.0.1", "localhost"]
-DJANGO_ALLOWED_HOST = getenv("DJANGO_ALLOWED_HOST", "127.0.0.1").split(",")
-ALLOWED_HOSTS = list(DEFAULT_HOST) + [
+# DJANGO_ALLOWED_HOST = getenv("DJANGO_ALLOWED_HOST", "127.0.0.1").split(",")
+
+DJANGO_ALLOWED_HOST = getenv("DJANGO_ALLOWED_HOST").split(",")
+
+ALLOWED_HOSTS = list(DJANGO_ALLOWED_HOST) + [
     host for host in DJANGO_ALLOWED_HOST if host not in DEFAULT_HOST
 ]
 
@@ -134,8 +140,6 @@ REDIS_LOCATION = (
     f"redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
 )
 
-logger.info(REDIS_LOCATION)
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -160,14 +164,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Zurich"
 
 USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+
+# if not DEBUG:
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
 STATICFILES_DIRS = [
     path.join(BASE_DIR, "static"),
     "/var/www/static/",
@@ -203,8 +210,11 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 LOGIN_REDIRECT_URL = "home:home_list_view"
 LOGOUT_REDIRECT_URL = "/login"
 
-CSRF_COOKIE_SECURE = True
-
+# CSRF_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = [
+    ':'.join(["http://192.168.0.243", getenv("DJANGO_PORT")]),
+    "http://k8s-django.k8s.example.com"
+]
 # SLASH
 
 APPEND_SLASH = False

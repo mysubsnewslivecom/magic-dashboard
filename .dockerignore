@@ -1,7 +1,8 @@
 **/*
 !rotary_phone/
 !main/
-# !static/
+!static/
 !templates/
 !manage.py
 !pyproject.toml
+!entrypoint.sh

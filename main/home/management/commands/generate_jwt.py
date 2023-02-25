@@ -4,7 +4,7 @@ import jwt
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from main.home.models import User
+from main.authuser.models import User
 from main.utility.functions import LoggingService
 
 log = LoggingService()
@@ -16,11 +16,11 @@ class GenerateJwt:
         # self.SECRET_KEY = subprocess.getoutput(cmd=self.cmd)
         self.SECRET_KEY = settings.SECRET_KEY
 
-    def generate_jwt(self, username: str):
-        user = User.objects.get(username=username)
+    def generate_jwt(self, email: str):
+        user = User.objects.get(email=email)
         payload = {
             "name": user.get_full_name(),
-            "username": user.username,
+            # "username": user.username,
             "email": user.email,
             "exp": round((datetime.datetime.now() + datetime.timedelta(1)).timestamp()),
             "iss": "Rotary Phone",
@@ -47,4 +47,4 @@ class GenerateJwt:
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        GenerateJwt().generate_jwt(username="admin")
+        GenerateJwt().generate_jwt(email="linux@localhost.org")

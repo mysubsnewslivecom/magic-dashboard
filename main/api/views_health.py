@@ -71,7 +71,6 @@ class DailyActivityViewset(EnablePartialUpdateMixin, viewsets.ModelViewSet):
         return Response(data=message, status=status.HTTP_202_ACCEPTED)
 
 
-
 class FitbitDailyActivityViewset(viewsets.ModelViewSet):
     queryset = FitbitDailyActivity.objects.all()
     serializer_class = serializer.FitbitDailyActivitySerializer
@@ -79,7 +78,12 @@ class FitbitDailyActivityViewset(viewsets.ModelViewSet):
     lookup_field = "date"
     http_method_names = ["get"]
 
-
     def list(self, request, *args, **kwargs):
-        data = FitbitDailyActivity.objects.get_last_week()
-        return Response(list(data.values()), status=status.HTTP_200_OK)
+        try:
+            data = FitbitDailyActivity.objects.get_last_week()
+            data = list(data.values())
+            resp_status = status.status.HTTP_200_OK
+        except Exception:
+            data = None
+            resp_status = status.HTTP_404_NOT_FOUND
+        return Response(data=data, status=resp_status)

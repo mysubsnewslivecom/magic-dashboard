@@ -35,7 +35,8 @@ checkmigrations:
 	source /home/linux/workspace/git/magic-dashboard/.env.linux && \
 	python3 manage.py makemigrations --check --no-input --dry-run
 
-build: build-celery build-celery-beat build-portal
+# build: build-celery build-celery-beat build-portal
+build: build-portal
 
 build-celery:
 	docker build . -t celery:local \
@@ -52,9 +53,6 @@ build-celery-beat:
 		--build-arg IMAGE_TAG=3.10-alpine
 
 build-portal:
-	docker build . -t rotary-phone:local \
-		-f dashboard.Dockerfile \
-		--build-arg IMAGE_NAME=python \
-		--build-arg IMAGE_TAG=3.10-alpine \
-		--build-arg DJANGO_PORT=9000 \
-		--build-arg GUNICORN_WORKERS=1
+	docker build . -f dashboard-ubuntu.Dockerfile \
+		-t 192.168.0.59:5000/dashboard:latest && \
+		docker push 192.168.0.59:5000/dashboard:latest

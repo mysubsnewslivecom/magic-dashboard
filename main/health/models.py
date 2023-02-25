@@ -112,7 +112,7 @@ class FitbitDailyActivityManager(models.Manager):
         enddate = last_date - timedelta(days=7)
         # FitbitDailyActivity.objects.filter(date__range=[startdate, enddate])
         result = FitbitDailyActivity.objects.filter(date__gte=enddate).order_by("date")
-
+        log.debug(result)
         return result
 
 class FitbitDailyActivity(PrimaryIdMixin, ActiveStatusMixin, TimestampMixin):
